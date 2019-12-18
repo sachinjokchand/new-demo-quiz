@@ -105,15 +105,15 @@ app.post('/login',(req, res) => {
       text: 'SELECT * FROM user_datar WHERE id = 'username'AND password= 'password'',
       values: [1],
     }
-        client.query(query, (err, res) => {
+        client.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
         } else {
           req.session.loggedin = true;
-        req.session.username = username;
-        res.redirect('/home');
-          console.log(res.rows[0]);
+          req.session.username = username;
+          res.redirect('/home');
+          console.log(results.rows[0])
         }
       })
   }
