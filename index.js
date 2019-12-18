@@ -1,3 +1,4 @@
+const cool = require('cool-ascii-faces'); 
 //use path module
 var path = require('path');
 //use express module
@@ -44,6 +45,7 @@ app.use(bodyParser.json());
 //set public folder as static folder for static file
 app.use('/assets',express.static(__dirname + '/public'));
  
+app.get('/cool', (req, res) => res.send(cool()));
 //route for homepage
 app.get('/',(req, res) => {  
     res.render('registration',{
