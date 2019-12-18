@@ -15,10 +15,10 @@ var app = express();
  
 //Create connection
 var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'db1'
+  host: 'ec2-174-129-255-69.compute-1.amazonaws.com',
+  user: 'pblfnftsdjildz',
+  password: 'afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df',
+  database: 'd6skc9j2bc3442'
 });
  
 //connect to database
