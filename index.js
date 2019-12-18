@@ -75,10 +75,13 @@ app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
   let sql = "INSERT INTO user_data SET ?";
   let query = conn.query(sql, data,(err, results) => {
-   
+    if (results.length > 0) {
     res.redirect('/login_page');
     // res.render('login',{
-      
+    }
+    else {
+       res.redirect('/');
+      }   
     // });
   });
 });
@@ -94,10 +97,12 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
   
-
-  let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
+   // let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
+  let sql = "SELECT * FROM user_data";
   let query = conn.query(sql, (err, results) => {
     if (results.length > 0) {
+      console.log(results);
+      console.log(query);
         req.session.loggedin = true;
         req.session.username = username;
         res.redirect('/home');
