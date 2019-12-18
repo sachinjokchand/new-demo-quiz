@@ -74,17 +74,21 @@ app.get('/',(req, res) => {
 app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
   let sql = "INSERT INTO user_data(name, last_name, email , contact ,password) values($1, $2, $3, $4, $5)";
-  let query = conn.query(sql, data,(err, results) => {
-    console.log(results);
-    if (results.length > 0) {
-    res.redirect('/login_page');
-    // res.render('login',{
-    }
-    else {
-       res.redirect('/');
-      }   
-    // });
-  });
+   var query1 = conn.query('INSERT INTO user_data(name, last_name, email , contact ,password) values($1, $2, $3, $4, $5)',
+    [data.name, data.last_name, data.email, data.contact data.password]);
+
+   console(conn.query('SELECT * FROM user_data'));
+  // let query = conn.query(sql, data,(err, results) => {
+  //   console.log(results);
+  //   if (results.length > 0) {
+  //   res.redirect('/login_page');
+  //   // res.render('login',{
+  //   }
+  //   else {
+  //      res.redirect('/');
+  //     }   
+  //   // });
+  // });
 });
 
 app.get('/login_page',(req, res) => {  
