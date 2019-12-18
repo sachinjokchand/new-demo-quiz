@@ -28,7 +28,7 @@ const conn = new Pool({
   connectionString : connString
 });
  
- const query = conn.query(
+  conn.query(
   'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
 
 //Create connection
@@ -73,17 +73,19 @@ app.get('/',(req, res) => {
 //route for insert data
 app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
-  let sql = "INSERT INTO user_data SET ?";
-  let query = conn.query(sql, data,(err, results) => {
-    if (results > 0) {
-    res.redirect('/login_page');
-    // res.render('login',{
-    }
-    else {
-         res.redirect('/');
-      }   
-    // });
-  });
+  let sql = {
+        text: 'INSERT INTO users(name, last_name, email, contact, password ) VALUES($1, $2, $3, $4, $5)',
+        values: [data.name, data.last_name, data.email, data.contact, data.password,],
+         }
+     conn.query(sql, (err, results) => {
+      if (err) {
+          res.redirect('/');
+        console.log(err.stack)
+      } else {
+          res.redirect('/login_page');
+        console.log(results.rows[0])
+      }
+    })
 });
 
 app.get('/login_page',(req, res) => {  
