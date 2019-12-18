@@ -29,7 +29,7 @@ const pool = new Pool({
 });
  
  const query = pool.query(
-  'CREATE TABLE user_data (id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40)) ,contact VARCHAR(40) ,password VARCHAR(40)');
+  'CREATE TABLE user_data(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
 
 //Create connection
 // var conn = mysql.createConnection({
