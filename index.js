@@ -102,7 +102,7 @@ app.post('/login',(req, res) => {
    const query = {
       // give the query a unique name
       name: 'fetch-user',
-      text: 'SELECT * FROM user_datar WHERE email = $1 AND password = $2',
+      text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
       values: [username, password],
     }
         conn.query(query, (err, results) => {
