@@ -13,16 +13,20 @@ var ejs = require('ejs');
 var bodyParser = require('body-parser');
 //use mysql database
 var mysql = require('mysql');
+
 var app = express();
-const { Client } = require('pg');
 
-const conn = new Client({
-  connectionString: process.env.postgres://pblfnftsdjildz:afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df@ec2-174-129-255-69.compute-1.amazonaws.com:5432/d6skc9j2bc3442
-,
-  ssl: true,
+let pg = require('pg');
+if (process.env.DATABASE_URL) {
+  pg.defaults.ssl = true;
+}
+
+let connString = process.env.DATABASE_URL || 'postgres://pblfnftsdjildz:afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df@ec2-174-129-255-69.compute-1.amazonaws.com:5432/d6skc9j2bc3442';
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString : connString
 });
-
-conn.connect();
  
 //Create connection
 // var conn = mysql.createConnection({
