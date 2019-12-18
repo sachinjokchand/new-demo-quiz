@@ -105,7 +105,7 @@ app.post('/login',(req, res) => {
       text: 'SELECT * FROM user_datar WHERE email = $1 AND password = $2',
       values: [username, password],
     }
-        client.query(query, (err, results) => {
+        conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
