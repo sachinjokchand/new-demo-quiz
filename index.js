@@ -75,7 +75,7 @@ app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
   let sql = "INSERT INTO user_data SET ?";
   let query = conn.query(sql, data,(err, results) => {
-    if(err) throw err;
+   
     res.redirect('/login_page');
     // res.render('login',{
       
