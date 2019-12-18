@@ -76,11 +76,11 @@ app.post('/signup',(req, res) => {
   let sql = {
         text: 'INSERT INTO user_data(name, last_name, email, contact, password ) VALUES($1, $2, $3, $4, $5, $6)',
         values: [data.name, data.last_name, data.email, data.contact, data.password,],
-         }
+         };
      conn.query(sql, (err, results) => {
       if (err) {
           res.redirect('/');
-        console.log(err.stack)
+        console.log(err)
       } else {
           res.redirect('/login_page');
         console.log(results.rows[0])
