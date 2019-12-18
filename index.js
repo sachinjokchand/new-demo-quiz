@@ -24,12 +24,12 @@ if (process.env.DATABASE_URL) {
 let connString = process.env.DATABASE_URL || 'postgres://pblfnftsdjildz:afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df@ec2-174-129-255-69.compute-1.amazonaws.com:5432/d6skc9j2bc3442';
 const { Pool } = require('pg');
 
-const conn = new Pool({
+const pool = new Pool({
   connectionString : connString
 });
  
- const query = conn.query(
-  'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40), last_name VARCHAR(40), email VARCHAR(40), contact VARCHAR(10), password VARCHAR(8) )');
+ const query = pool.query(
+  'CREATE TABLE items1(id SERIAL PRIMARY KEY, text VARCHAR(40) not null)');
 
 //Create connection
 // var conn = mysql.createConnection({
