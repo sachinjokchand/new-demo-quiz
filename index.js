@@ -6,6 +6,8 @@ var express = require('express');
 //use ejs view engine
 var session = require('express-session');
 
+const PORT = process.env.PORT || 5000
+
 var ejs = require('ejs');
 //use bodyParser middleware
 var bodyParser = require('body-parser');
@@ -174,22 +176,6 @@ app.get('/view_quiz',(req, res) => {
   }
 
   });
-// app.get('/view_quiz',(req, res) => {  
-//   if (req.session.loggedin) {
-//     let sql = "SELECT * FROM quiz";
-//   let query = conn.query(sql, (err, results) => {
-//     if(err) throw err;
-//     res.render('quiz_view',{
-//       results: results
-//     });
-//   });
-//   }
-//   else {
-//      res.redirect('/login_page');
-//   }
 
-//   });
 //server listening
-app.listen(8080, () => {
-  console.log('Server is running at port 8080');
-});
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
