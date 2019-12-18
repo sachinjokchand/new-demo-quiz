@@ -80,10 +80,10 @@ app.post('/signup',(req, res) => {
      conn.query(query, (err, results) => {
       if (err) {
           res.redirect('/');
-        console.log(err)
+        console.log(err);
       } else {
           res.redirect('/login_page');
-        console.log(results.rows[0])
+        console.log(results.rows[0]);
       }
     })
 });
@@ -98,21 +98,24 @@ app.post('/login',(req, res) => {
   var username = req.body.user_name;
   var password = req.body.password;
   if (username && password) {  
-  
-   // let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
-  let sql = "SELECT * FROM user_data";
-  let query = conn.query(sql, (err, results) => {
-    if (results.length > 0) {
-      console.log(results);
-      console.log(query);
-        req.session.loggedin = true;
+
+   const query = {
+      // give the query a unique name
+      name: 'fetch-user',
+      text: 'SELECT * FROM user_datar WHERE id = 'username'AND password= 'password'',
+      values: [1],
+    }
+        client.query(query, (err, res) => {
+        if (err) {
+          console.log(err.stack)
+          res.send('Incorrect Username and/or Password!');
+        } else {
+          req.session.loggedin = true;
         req.session.username = username;
         res.redirect('/home');
-      } else {
-        res.send('Incorrect Username and/or Password!');
-      }     
-      res.end();
-  });
+          console.log(res.rows[0]);
+        }
+      })
   }
   else {
     res.send('Please enter Username and Password!');
