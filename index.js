@@ -74,7 +74,7 @@ app.get('/',(req, res) => {
 app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
   let sql = {
-        text: 'INSERT INTO users(name, last_name, email, contact, password ) VALUES($1, $2, $3, $4, $5)',
+        text: 'INSERT INTO user_data(name, last_name, email, contact, password ) VALUES($1, $2, $3, $4, $5, $6)',
         values: [data.name, data.last_name, data.email, data.contact, data.password,],
          }
      conn.query(sql, (err, results) => {
