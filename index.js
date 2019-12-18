@@ -30,7 +30,7 @@ const pool = new Pool({
  
  const query = pool.query(
   'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-query.on('end', () => { pool.end(); });
+
 //Create connection
 // var conn = mysql.createConnection({
 //   host: 'ec2-174-129-255-69.compute-1.amazonaws.com',
