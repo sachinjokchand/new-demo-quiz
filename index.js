@@ -72,9 +72,18 @@ app.get('/',(req, res) => {
  
 //route for insert data
 app.post('/signup',(req, res) => {
+
+
+    pg.connect(connectionString, (err, conn, done) => {
+    // Handle connection errors
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
   const data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
   // let sql = "INSERT INTO user_data(name, last_name, email , contact ,password) values($1, $2, $3, $4, $5)";
-   conn.query('INSERT INTO user_data(name, last_name , email, contact ,password ) values($1, $2 ,$3 , $4 ,$5)',
+   conn.query('INSERT INTO user_data(name, last_name , email, contact ,password ) values($1, $2, $3, $4, $5)',
     [data.name, data.last_name , data.email, data.contact ,data.password]);
 
    console(conn.query('SELECT * FROM user_data'));
