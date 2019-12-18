@@ -89,8 +89,11 @@ app.post('/login',(req, res) => {
   
   var username = req.body.user_name;
   var password = req.body.password;
-  if (username && password) {
-  let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
+  if (username && password) {  
+  
+  let sql = "SELECT table_schema,table_name FROM information_schema.tables";
+
+  // let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
   let query = conn.query(sql, (err, results) => {
     if (results.length > 0) {
         req.session.loggedin = true;
