@@ -21,15 +21,15 @@ if (process.env.DATABASE_URL) {
   pg.defaults.ssl = true;
 }
 
-let connString = process.env.DATABASE_URL || 'postgres://pblfnftsdjildz:afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df@ec2-174-129-255-69.compute-1.amazonaws.com:5432/d6skc9j2bc3442';
+let connString = process.env.DATABASE_URL || 'postgres://gcbtdmukjhvuks:df4bd356660088691211fc9d0d55ad435edb3922bf2c60d1b67fd865fb78f26c@ec2-107-21-122-38.compute-1.amazonaws.com:5432/dfstnb08u0plsu';
 const { Pool } = require('pg');
 
-const pool = new Pool({
+const conn = new Pool({
   connectionString : connString
 });
  
- const query = pool.query(
-  'CREATE TABLE items1(id SERIAL PRIMARY KEY, text VARCHAR(40) not null)');
+ const query = conn.query(
+  'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
 
 //Create connection
 // var conn = mysql.createConnection({
@@ -94,9 +94,8 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
   
-  let sql = "SELECT table_schema,table_name FROM information_schema.tables";
 
-  // let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
+  let sql = "SELECT * FROM user_data WHERE email = '"+username+"' AND password = '"+password+"'";
   let query = conn.query(sql, (err, results) => {
     if (results.length > 0) {
         req.session.loggedin = true;
