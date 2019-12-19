@@ -273,10 +273,10 @@ app.post('/submit_test',(req, res) => {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
          
-          if(results.rows[i].answer == answer[i] )
-          {
-             correct ++;
-          }
+          // if(results.rows[i].answer == answer[i] )
+          // {
+          //    correct ++;
+          // }
           console.log(results.rows[i].answer);
            console.log(answer[i]);
          // res.render('user_quiz',{
@@ -285,7 +285,7 @@ app.post('/submit_test',(req, res) => {
         }
       })
      } 
-      res.send('Your Results Out Of '+total-1+'/'+correct);
+      res.send('Your Results Out Of '+total+'/'+correct);
     }
   else {
      res.redirect('/login_page');
