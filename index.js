@@ -279,7 +279,7 @@ app.post('/submit_test',(req, res) => {
           console.log(results.rows)
            console.log(results.rows[0].answer);
            console.log(answer[i])
-          if( results.rows[0].answer.toString().trim() === answer[i].toString().trim() )
+          if( results.rows[0].answer.trim() === answer[i].trim() )
           {
             correct++;
           console.log(results.rows[0].answer);
