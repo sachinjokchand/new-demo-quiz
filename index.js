@@ -249,25 +249,24 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
-  var i;
   var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
    console.log(total)
-  for (i = 0 ; i <=total; i++) {
+  for (var i = 0 ; i <total; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
     
     }
-    for (var j = 0 ; j <=total; j++) {
+    for (var j = 0 ; j <total; j++) {
       console.log(question_id[j])
       console.log(answer[j])
        console.log("answer")
      }
    if (req.session.loggedin) {
-     for (i = 0 ; i <=total.length; i++) {
+     for (var i = 0 ; i <tota; i++) {
      let sql = "SELECT answer FROM quiz WHERE id="+question_id[i]+"";
      let query = conn.query(sql, (err, results) => {
         if (err) {
@@ -286,7 +285,7 @@ app.post('/submit_test',(req, res) => {
         }
       })
      }
-     res.send('results'+correct);
+     res.send('results '+correct);
     }
   else {
      res.redirect('/login_page');
