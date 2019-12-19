@@ -252,7 +252,7 @@ app.post('/submit_test',(req, res) => {
   var correct = 0;
   var answer = [];
   var question_id = [];
-
+  var total    = req.body.total;
    console.log(total)
   for (var i = 0 ; i <=total; i++) {
 
@@ -285,7 +285,7 @@ app.post('/submit_test',(req, res) => {
         }
       })
      }
-    
+
      res.send('results '+correct);
     }
   else {
