@@ -248,17 +248,19 @@ app.get('/view_quiz',(req, res) => {
   });
 
 app.post('/submit_test',(req, res) => {  
-
+  
+  var answer = [];
+  var question_id = [];
   var total    = req.body.total;
   for (var i = 1 ; i <=total.length; i++) {
    
-    var question_id = req.body.question;
-    var option    = req.body.option[i];
+    var question_id[i] = req.body.question[i];
+    var answer[i]    = req.body.option[i];
      
-      console.log(question_id);
-      console.log(option)
-      console.log("hello"+i)
     }
+      console.log(question_id)
+      console.log(answer)
+       console.log("answer")
    if (req.session.loggedin) {
     const query = {
       text: 'SELECT * FROM quiz'
