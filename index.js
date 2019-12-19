@@ -256,7 +256,7 @@ app.post('/submit_test',(req, res) => {
    var answer    = req.body.answer.i;
    console.log(question_id);
    console.log(answer);
-    console.log(i);
+    console.log(total);
 
    if (req.session.loggedin) {
     const query = {
@@ -266,7 +266,7 @@ app.post('/submit_test',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-          console.log(results.rows);
+          // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
             });
