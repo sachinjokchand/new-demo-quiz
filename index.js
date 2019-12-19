@@ -209,7 +209,7 @@ app.get('/view_quiz',(req, res) => {
           res.send('Incorrect Username and/or Password!');
         } else {
          res.render('quiz_view',{
-              results: results
+              results: results.rows[0]
             });
 
         }

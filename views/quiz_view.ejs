@@ -1,9 +1,205 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title></title>
+    <meta charset="utf-8">
+    <title>view question</title>
+  <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+ <style type="text/css">
+  .btn-success{
+    background-color: #4d5850
+   }
+  .edit{
+    background-color: #4d5850
+   }
+  .delete {
+    position: relative;
+    right: 5px;
+  }
+  
+ </style>
 </head>
 <body>
-"aaaaaaaaaaaaaaaaaaaaaaaaa"
+  <div class="container">
+    <h2>Question List</h2>
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Add New</button>
+       <a href="/home" class="btn btn-success" >Home</a><br>
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>Question ID</th>
+          <th>Question Name</th>
+          <th>option 1</th>
+          <th>option 2</th>
+          <th>option 3</th>
+          <th>option 4</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% results.forEach((result) => { %>
+        <tr>
+          <td><% = result.id %></td>
+          <td><%= result.question %></td>
+          <td><%= result.option1 %></td>
+          <td><%= result.option2 %></td>
+          <td><%= result.option3 %></td>
+          <td><%= result.option4 %></td>
+          <td><%= result.answer %></td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%= result.id %>" >Edit</a><br>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="<%= result.id %>">Delete</a>
+          </td>
+        </tr>
+       <% }) %>
+      </tbody>
+    </table>
+  </div>
+ 
+    <!-- Modal Add Product-->
+      <form action="/add_question" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New Question</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <textarea type="text"  style="width:100%;" name="question" class="form-control" placeholder="question" required></textarea>
+               </div>
+ 
+               <div class="form-group">
+                   <input type="text" name="option1" class="form-control" placeholder="option1" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="option2" class="form-control" placeholder="option2" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="option3" class="form-control" placeholder="option3" required>
+               </div>
+
+
+               <div class="form-group">
+                   <input type="text" name="option4" class="form-control" placeholder="option4" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="answer" class="form-control" placeholder="answer" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+     </form>
+  
+   <% results.forEach((result) => { %>
+     <!-- Modal Update Product-->
+   <form action="/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+               <div class="form-group">
+                   <textarea type="text" style="width:100%;" name="question" class="question<%= result.id %>" required><%= result.question %></textarea>
+               </div>
+ 
+               <div class="form-group">
+                   <input type="text" name="option1" class="option1<%= result.id %>" value="<%= result.option1 %>"  required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="option2" class="option2<%= result.id %>" value="<%= result.option2 %>" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="option3" class="option3<%= result.id %>" value="<%= result.option3 %>" required>
+               </div>
+
+
+               <div class="form-group">
+                   <input type="text" name="option4" class="option4<%= result.id %>" value="<%= result.option4 %>" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="answer" class="answer<%= result.id %>" value="<%= result.answer %>" required>
+               </div>
+             </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="id" value="<%= result.id %>">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+  <% }) %>
+     <!-- Modal Delete Product-->
+      <form id="add-row-form" action="/delete" method="post">
+         <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel">Delete Product</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   </div>
+                   <div class="modal-body">
+                                                 <strong>Are you sure to delete this data?</strong>
+                   </div>
+                   <div class="modal-footer">
+                                            <input type="hidden" name="id" class="form-control id2" required>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                   </div>
+                    </div>
+            </div>
+         </div>
+     </form>
+ 
+<script src="/assets/js/jquery-3.3.1.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+            //showing data to edit modal      
+     $('#mytable').on('click','.edit',function(){
+        var id = $(this).data('id');
+        var question = $.trim($('.question'+id).val());
+        var option1  = $('.option1'+id).val();
+        var option2  = $('.option2'+id).val();
+        var option3  = $('.option3'+id).val();
+        var option4  = $('.option4'+id).val();
+        var answer   = $('.answer'+id).val();
+
+        $('#EditModal').modal('show');
+        $('.question'+id).val(question);
+        $('.option1'+id).val(option1);
+        $('.option2'+id).val(option2);
+        $('.option3'+id).val(option3);
+        $('.option4'+id).val(option4);
+        $('.answer'+id).val(answer);
+        $('.id'+id).val(question);
+      });
+            //showing delete record modal
+     $('#mytable').on('click','.delete',function(){
+        var id = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.id2').val(id);
+      });
+    });
+</script>
 </body>
-</html>>
+</html>
