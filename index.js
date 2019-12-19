@@ -29,11 +29,22 @@ const conn = new Pool({
 });
  
   conn.query(
-  'CREATE TABLE quiz(id SERIAL PRIMARY KEY, question VARCHAR(255), option1 VARCHAR(40), option2 VARCHAR(40), option3 VARCHAR(40), option4 VARCHAR(40), answer VARCHAR(40))');
- 
-  conn.query(
   'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
 
+//Create connection
+// var conn = mysql.createConnection({
+//   host: 'ec2-174-129-255-69.compute-1.amazonaws.com',
+//   user: 'pblfnftsdjildz',
+//   password: 'afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df',
+//   database: 'd6skc9j2bc3442'
+// });
+ 
+//connect to database
+// conn.connect((err) =>{
+//   if(err) throw err;
+//   console.log('Mysql Connected...');
+// });
+ 
 //set views file
 app.set('views',path.join(__dirname,'views'));
 
@@ -47,6 +58,9 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+//set public folder as static folder for static file
 app.use('/assets',express.static(__dirname + '/public'));
  
 app.get('/cool', (req, res) => res.send(cool()));
@@ -85,7 +99,12 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
 
-   const query = 'SELECT * FROM users WHERE id = $1 AND password = $2', [id],[password];
+   const query = {
+      // give the query a unique name
+      name: 'fetch-user',
+      text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
+      values: [username, password],
+    }
         conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
@@ -144,19 +163,13 @@ app.post('/add_question',(req, res) => {
   var option4  = req.body.option4;
   var answer   = req.body.answer;
 
-  const query = {
-        text: 'INSERT INTO quiz(question, option1, option2, option3, option4, answer) VALUES($1, $2, $3, $4, $5, $6)',
-        values: [question, option1, option2, option3, option4, answer],
-         }
-     conn.query(query, (err, results) => {
-      if (err) {
-          res.redirect('/login_page');
-        console.log(err);
-      } else {
-         res.redirect('/view_quiz');
-        console.log(results);
-      }
-    })
+  let data = {question: question, option1: option1, option2: option2, option3: option3, option4: option4 , answer: answer};
+  let sql = "INSERT INTO quiz SET ?";
+  let query = conn.query(sql, data,(err, results) => {
+    if(err) throw err;
+    // res.redirect('/login_page');
+   res.redirect('/view_quiz');
+  });
 });
 
 app.post('/update',(req, res) => {
@@ -178,20 +191,13 @@ app.post('/delete',(req, res) => {
 
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
-   const query = {
-      text: 'SELECT * FROM quiz',
-     }
-        conn.query(query, (err, results) => {
-        if (err) {
-          console.log(err);
-           res.send('Incorrect details od Data!');
-        } else {
-         res.render('quiz_view',{
-              results: results
-            });
-          console.log(results);
-        }
-      })
+    let sql = "SELECT * FROM quiz";
+  let query = conn.query(sql, (err, results) => {
+    if(err) throw err;
+    res.render('quiz_view',{
+      results: results
+    });
+  });
   }
   else {
      res.redirect('/login_page');
