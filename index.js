@@ -260,26 +260,26 @@ app.post('/submit_test',(req, res) => {
     
     }
     for (i = 0 ; i <=total.length; i++) {
-      console.log(question_id[i])
-      console.log(answer[i])
-       console.log("answer")
+      // console.log(question_id[i])
+      // console.log(answer[i])
+      //  console.log("answer")
      }
    if (req.session.loggedin) {
-    const query = {
-      text: 'SELECT * FROM quiz'
-     }
-     conn.query(query, (err, results) => {
+     for (i = 0 ; i <=total.length; i++) {
+     let sql = "SELECT answer FROM quiz WHERE id="+question_id[i]+"";
+     let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
+          console.log( results.rows)
           // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
             });
-
         }
       })
      } 
+    }
   else {
      res.redirect('/login_page');
    }
