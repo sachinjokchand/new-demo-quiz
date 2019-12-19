@@ -251,7 +251,6 @@ app.post('/submit_test',(req, res) => {
   
   var i;
   var answer = [];
-  var correct = 0;
   var question_id = [];
   var total    = req.body.total;
   for (i = 0 ; i <=total.length; i++) {
@@ -260,19 +259,20 @@ app.post('/submit_test',(req, res) => {
      answer[i]    = req.body.option[i];  
     
     }
-
+    for (i = 0 ; i <=total.length; i++) {
+      console.log(question_id[i])
+      console.log(answer[i])
+       console.log("answer")
+     }
    if (req.session.loggedin) {
-     const query = {  text: 'SELECT * answer FROM quiz' }
+    const query = {
+      text: 'SELECT * FROM quiz'
+     }
      conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-
-           for (i = 0 ; i <=total.length; i++) {
-             console.log(question_id[i])
-              console.log(answer[i])
-            }
-         console.log();
+          // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
             });
