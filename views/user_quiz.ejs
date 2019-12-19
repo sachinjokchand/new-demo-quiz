@@ -58,24 +58,13 @@ hr {
                 <input type="radio" name="option" value="<%= result.option2 %>"> <%= result.option2 %>
                 <input type="radio" name="option" value="<%= result.option3 %>"> <%= result.option3 %>
                 <input type="radio" name="option" value="<%= result.option4 %>"> <%= result.option4 %>
-                <input type="hidden" name="answer" id="set_ans" value="">
+              
             </p><hr>
             <%   $i ++; %>
         
        <% }) %> <input type="hidden" name="total" value="<%= $i %>">
        <p align='center'><input type="submit" value="submit test"></p></form>
       
-     <script type="text/javascript">
-      (function (){
-            var radios = document.getElementsByName('option');
-            console.log(radios);
-            for(var i = 0; i < radios.length; i++){
-                radios[i].onclick = function(){
-                   jQuery('.set_ans').val(this.value);
-                }
-            }
-        })();
-     </script>   
      
   </div>
 </body>
