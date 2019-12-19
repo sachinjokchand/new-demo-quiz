@@ -257,7 +257,7 @@ app.post('/submit_test',(req, res) => {
    console.log(question_id);
    console.log(answer)
     console.log(total)
-      console.log("hello"+1)
+      console.log("hello"+i)
 
    if (req.session.loggedin) {
     const query = {
