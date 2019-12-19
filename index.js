@@ -33,21 +33,7 @@ const conn = new Pool({
  
   conn.query(
   'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
-  
-//Create connection
-// var conn = mysql.createConnection({
-//   host: 'ec2-174-129-255-69.compute-1.amazonaws.com',
-//   user: 'pblfnftsdjildz',
-//   password: 'afe98a1cdf48a05766c49a0750a9a7b0d4adac49094ecc4d0ad6a24b859908df',
-//   database: 'd6skc9j2bc3442'
-// });
- 
-//connect to database
-// conn.connect((err) =>{
-//   if(err) throw err;
-//   console.log('Mysql Connected...');
-// });
- 
+
 //set views file
 app.set('views',path.join(__dirname,'views'));
 
@@ -61,9 +47,6 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-//set public folder as static folder for static file
 app.use('/assets',express.static(__dirname + '/public'));
  
 app.get('/cool', (req, res) => res.send(cool()));
@@ -201,8 +184,6 @@ app.post('/delete',(req, res) => {
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
    const query = {
-      // give the query a unique name
-      name: 'fetch-quiz',
       text: 'SELECT * FROM quiz',
      }
         conn.query(query, (err, results) => {
