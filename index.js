@@ -85,7 +85,7 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
 
-   const query = 'SELECT * FROM user_data WHERE user_data.email = 'username' AND user_data.password ='password'';
+   const query = 'SELECT * FROM users WHERE id = $1 AND password = $2', [id],[password];
         conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
