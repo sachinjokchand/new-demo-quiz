@@ -249,10 +249,11 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
+  var i;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
-  for (var i = 1 ; i <=total.length; i++) {
+  for (i = 0 ; i <=total.length; i++) {
    
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];
