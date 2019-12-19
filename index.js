@@ -34,9 +34,6 @@ const conn = new Pool({
   conn.query(
   'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
   
-  
-
-
 //Create connection
 // var conn = mysql.createConnection({
 //   host: 'ec2-174-129-255-69.compute-1.amazonaws.com',
@@ -169,13 +166,19 @@ app.post('/add_question',(req, res) => {
   var option4  = req.body.option4;
   var answer   = req.body.answer;
 
-  let data = {question: question, option1: option1, option2: option2, option3: option3, option4: option4 , answer: answer};
-  let sql = "INSERT INTO quiz SET ?";
-  let query = conn.query(sql, data,(err, results) => {
-    if(err) throw err;
-    // res.redirect('/login_page');
-   res.redirect('/view_quiz');
-  });
+  const query = {
+        text: 'INSERT INTO quiz(question, option1, option2, option3, option4, answer) VALUES($1, $2, $3, $4, $5, $6)',
+        values: [question, option1, option2, option3, option4, answer],
+         }
+     conn.query(query, (err, results) => {
+      if (err) {
+          res.redirect('/view_quiz');
+        console.log(err);
+      } else {
+          res.redirect('/login_page');
+        console.log(results.rows[0]);
+      }
+    })
 });
 
 app.post('/update',(req, res) => {
@@ -197,13 +200,20 @@ app.post('/delete',(req, res) => {
 
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
-    let sql = "SELECT * FROM quiz";
-  let query = conn.query(sql, (err, results) => {
-    if(err) throw err;
-    res.render('quiz_view',{
-      results: results
-    });
-  });
+   const query = {
+      // give the query a unique name
+      name: 'fetch-user',
+      text: 'SELECT * FROM quiz',
+     }
+        conn.query(query, (err, results) => {
+        if (err) {
+          console.log(err.stack)
+           res.redirect('/add_quiz');
+        } else {
+          res.redirect('/view_quiz');
+          console.log(results);
+        }
+      })
   }
   else {
      res.redirect('/login_page');
