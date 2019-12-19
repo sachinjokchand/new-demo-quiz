@@ -250,16 +250,15 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
 
   var total    = req.body.total;
-  for (var i = 0; i <total.length; i++) {
+  for (var i = 1 ; i <=total.length; i++) {
    
     var question_id = req.body.question;
     var option    = req.body.option+i;
-    
-     console.log(question_id);
-     console.log(option)
-   
+     
+      console.log(question_id);
+      console.log(option)
       console.log("hello"+i)
-
+    }
    if (req.session.loggedin) {
     const query = {
       text: 'SELECT * FROM quiz'
@@ -279,7 +278,6 @@ app.post('/submit_test',(req, res) => {
   else {
      res.redirect('/login_page');
    }
-  }
   });
 
 //server listening
