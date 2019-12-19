@@ -266,26 +266,25 @@ app.post('/submit_test',(req, res) => {
     //    console.log("answer")
     //  }
    if (req.session.loggedin) {
-     for (var i = 0 ; i <total-1; i++) {
-      console.log(question_id[i])
-      console.log(answer[i])
+     for (var j = 0 ; j <total-1; j++) {
+      console.log(question_id[j])
+      console.log(answer[j])
 
-     let sql = "SELECT answer FROM quiz WHERE id="+question_id[i]+"";
+     let sql = "SELECT answer FROM quiz WHERE id="+question_id[j]+"";
      let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-           var i =  0;
+         
           console.log(results.rows)
            console.log(results.rows[0].answer);
-            console.log(i)
-           console.log(answer[i])
-          if( answer[i] == results.rows[0].answer )
+            console.log(j)
+           console.log(answer[j])
+          if( answer[j] == results.rows[0].answer )
           {
             correct++;
           console.log(results.rows[0].answer);
           }
-          i++;
          // res.render('user_quiz',{
          //      results: results.rows
          //    });
