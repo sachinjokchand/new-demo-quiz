@@ -35,15 +35,15 @@
         </tr>
       </thead>
       <tbody>
-       <% results.forEach((result) { %>
+       <% results.forEach((result) => { %>
         <tr>
-          <td><% result.id %></td>
-          <td><% result.question %></td>
-          <td><% result.option1 %></td>
-          <td><% result.option2 %></td>
-          <td><% result.option3 %></td>
-          <td><% result.option4 %></td>
-          <td><% result.answer %></td>
+          <td><%= result.id %></td>
+          <td><%= result.question %></td>
+          <td><%= result.option1 %></td>
+          <td><%= result.option2 %></td>
+          <td><%= result.option3 %></td>
+          <td><%= result.option4 %></td>
+          <td><%= result.answer %></td>
           <td>
             <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%= result.id %>" >Edit</a><br>
             <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="<%= result.id %>">Delete</a>
@@ -100,7 +100,7 @@
         </div>
      </form>
   
-   <% results.forEach((result)  { %>
+   <% results.forEach((result) => { %>
      <!-- Modal Update Product-->
    <form action="/update" method="post">
        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

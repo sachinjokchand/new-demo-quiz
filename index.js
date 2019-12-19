@@ -83,7 +83,7 @@ app.post('/signup',(req, res) => {
         console.log(err);
       } else {
           res.redirect('/login_page');
-        console.log(results.rows[0]);
+        // console.log(results.rows[0]);
       }
     });
 });
@@ -115,8 +115,11 @@ app.post('/login',(req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           res.redirect('/home');
-          console.log(results);
-            console.log(results)
+          console.log(results.rows[0]);
+            console.log(results);
+            console.log("ssssssssss");
+            console.log("aaaaaaaaaaa")
+
         }
       })
   }
@@ -206,7 +209,6 @@ app.get('/view_quiz',(req, res) => {
      conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
-          res.send('Incorrect Username and/or Password!');
         } else {
          res.render('quiz_view',{
               results: results.rows[0]
