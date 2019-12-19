@@ -112,7 +112,13 @@ app.post('/login',(req, res) => {
         } else {
           req.session.loggedin = true;
           req.session.username = username;
+          if(username =='admin' && password == '12345'){
           res.redirect('/home');
+          }
+          else
+          {
+           res.redirect('/user_page');
+          }
           // console.log(results.rows[0]);
         }
       })
@@ -142,10 +148,33 @@ app.get('/logout',(req, res) => {
 
   });
 
-
-app.get('/add_quiz',(req, res) => {  
+app.get('/user_page',(req, res) => {  
   if (req.session.loggedin) {
-    res.render('add_quiz');
+    res.render('user_page');
+  }
+  else {
+     res.redirect('/login_page');
+  }
+
+  });
+
+
+app.get('/give_quiz',(req, res) => {  
+  if (req.session.loggedin) {
+    const query = {
+      text: 'SELECT * FROM quiz'
+     }
+     conn.query(query, (err, results) => {
+        if (err) {
+          console.log(err.stack+'aaaaaaaaaaaaaa');
+        } else {
+          console.log(results.rows);
+         res.render('user_quiz',{
+              results: results.rows
+            });
+
+        }
+      })
   }
   else {
      res.redirect('/login_page');
