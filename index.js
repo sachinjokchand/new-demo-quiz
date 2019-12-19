@@ -250,6 +250,7 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
   
   var i;
+  var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
@@ -272,15 +273,19 @@ app.post('/submit_test',(req, res) => {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
          
-          console.log(results.rows[0].answer)
-         
+          // console.log(results.rows[0].answer)
+          if(results.rows[0].answer == answer[i] )
+          {
+            correct++;
+          }
           // console.log(results.rows);
-         res.render('user_quiz',{
-              results: results.rows
-            });
+         // res.render('user_quiz',{
+         //      results: results.rows
+         //    });
         }
       })
-     } 
+     }
+     res.send(correct); 
     }
   else {
      res.redirect('/login_page');
