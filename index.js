@@ -273,7 +273,7 @@ app.post('/submit_test',(req, res) => {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
          
-          // console.log(results.rows[0].answer)
+          console.log(results.rows[0].answer)
           if(results.rows[0].answer == answer[i] )
           {
             correct++;
@@ -285,7 +285,7 @@ app.post('/submit_test',(req, res) => {
         }
       })
      }
-     res.send(correct); 
+     res.send('Please enter Username and Password!');
     }
   else {
      res.redirect('/login_page');
