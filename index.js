@@ -28,8 +28,8 @@ const conn = new Pool({
   connectionString : connString
 });
  
-  conn.query(
-  'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
+  // conn.query(
+  // 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
 
 //Create connection
 // var conn = mysql.createConnection({
@@ -102,8 +102,8 @@ app.post('/login',(req, res) => {
    const query = {
       // give the query a unique name
       name: 'fetch-user',
-      text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
-      values: [username, password],
+      text: 'SELECT * FROM user_data WHERE email = $1',
+      values: [username],
     }
         conn.query(query, (err, results) => {
         if (err) {
