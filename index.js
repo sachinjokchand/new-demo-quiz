@@ -261,9 +261,9 @@ app.post('/submit_test',(req, res) => {
      answer[i]    = req.body.option[i];  
     
     }
-    for (i = 0 ; i <=total.length; i++) {
-      console.log(question_id[i])
-      console.log(answer[i])
+    for (var j = 0 ; j <=total.length; j++) {
+      console.log(question_id[j])
+      console.log(answer[j])
        console.log("answer")
      }
    if (req.session.loggedin) {
