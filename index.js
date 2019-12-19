@@ -248,13 +248,14 @@ app.get('/view_quiz',(req, res) => {
   });
 
 app.post('/submit_test',(req, res) => {  
+  
   var i;
   var j = 0;
   var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
-  for (i = 0 ; i <=total.length; i++) {
+  for (i = 0 ; i <total.length; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
@@ -266,21 +267,20 @@ app.post('/submit_test',(req, res) => {
       //  console.log("answer")
      }
    if (req.session.loggedin) {
-     for (i = 0 ; i <=total.length; i++) {
+     for (i = 0 ; i <total.length; i++) {
      let sql = "SELECT answer FROM quiz WHERE id="+question_id[i]+"";
      let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
          
-          console.log(i);
+          console.log(j);
           console.log(results.rows[j].answer)
-           j++;
-         res.render('user_quiz',{
-              results: results.rows
-            });
-        }
-      })
+
+
+          }
+         })
+       j++;
      } 
     }
   else {
