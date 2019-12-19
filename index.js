@@ -271,7 +271,9 @@ app.post('/submit_test',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-          console.log( results.rows[i].answer)
+         forEach(result.rows, (row) => {
+          console.log(row.answer)
+         }
           // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
