@@ -101,7 +101,7 @@ app.post('/login',(req, res) => {
   console.log(password);
   if (username && password) {  
 
-     let sql =  "SELECT * FROM user_data WHERE id="+username+"";
+     let sql =  "SELECT * FROM user_data WHERE email="+username+"";
      let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack)
