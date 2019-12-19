@@ -248,8 +248,9 @@ app.get('/view_quiz',(req, res) => {
   });
 
 app.post('/submit_test',(req, res) => {  
-  
   var i;
+  var j = 0;
+  var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
@@ -273,8 +274,8 @@ app.post('/submit_test',(req, res) => {
         } else {
          
           console.log(i);
-          console.log(results.rows[i].answer)
-         
+          console.log(results.rows[j].answer)
+           j++;
          res.render('user_quiz',{
               results: results.rows
             });
