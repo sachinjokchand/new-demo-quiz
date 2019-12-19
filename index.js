@@ -273,7 +273,7 @@ app.post('/submit_test',(req, res) => {
         } else {
          forEach(result.rows, (row) => {
           console.log(row.answer)
-         }
+         });
           // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
