@@ -32,7 +32,7 @@ const conn = new Pool({
   'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
   
   conn.query(
-  'CREATE TABLE quiz(id SERIAL PRIMARY KEY, question VARCHAR(255), option1 VARCHAR(40), option2 VARCHAR(40), option3 VARCHAR(40), option4 VARCHAR(40), answer(40))');
+  'CREATE TABLE quiz(id SERIAL PRIMARY KEY, question VARCHAR(255), option1 VARCHAR(40), option2 VARCHAR(40), option3 VARCHAR(40), option4 VARCHAR(40), answer VARCHAR(40))');
   
 
 
