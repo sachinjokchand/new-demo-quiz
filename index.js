@@ -116,8 +116,7 @@ app.post('/login',(req, res) => {
           req.session.username = username;
           res.redirect('/home');
           console.log(results);
-            console.log(err.stack)
-           console.log(err.stack);
+            console.log(results)
             console.log("aaaaaaaaaaaaaa");
             console.log("aaaaaaaaaaaaaa")
         }
