@@ -85,7 +85,7 @@ app.post('/signup',(req, res) => {
           res.redirect('/login_page');
         console.log(results.rows[0]);
       }
-    })
+    });
 });
 
 app.get('/login_page',(req, res) => {  
@@ -102,8 +102,8 @@ app.post('/login',(req, res) => {
    const query = {
       // give the query a unique name
       name: 'fetch-user',
-      text: 'SELECT * FROM user_data WHERE email = $1',
-      values: [username],
+      text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
+      values: [username, password],
     }
         conn.query(query, (err, results) => {
         if (err) {
@@ -124,7 +124,6 @@ app.post('/login',(req, res) => {
   }
   else {
     res.send('Please enter Username and Password!');
-    res.end();
   }
 });
 
@@ -169,12 +168,19 @@ app.post('/add_question',(req, res) => {
   var answer   = req.body.answer;
 
   let data = {question: question, option1: option1, option2: option2, option3: option3, option4: option4 , answer: answer};
-  let sql = "INSERT INTO quiz SET ?";
-  let query = conn.query(sql, data,(err, results) => {
-    if(err) throw err;
-    // res.redirect('/login_page');
-   res.redirect('/view_quiz');
-  });
+  const query = {
+        text: 'INSERT INTO quiz(question, option1, option2, option3, option4, answer ) VALUES($1, $2, $3, $4, $5, $6)',
+        values: [data.question, data.option1, data.option2, data.option3, data.option4, data.answer],
+         }
+     conn.query(query, (err, results) => {
+      if (err) {
+          res.redirect('/home');
+        console.log(err);
+      } else {
+          res.redirect('/view_quiz');
+        // console.log(results.rows[0]);
+      }
+    });
 });
 
 app.post('/update',(req, res) => {
@@ -196,13 +202,19 @@ app.post('/delete',(req, res) => {
 
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
-    let sql = "SELECT * FROM quiz";
-  let query = conn.query(sql, (err, results) => {
-    if(err) throw err;
-    res.render('quiz_view',{
-      results: results
-    });
-  });
+    const query = {
+      text: 'SELECT * FROM quiz'
+     }
+     conn.query(query, (err, results) => {
+        if (err) {
+          console.log(err.stack+'aaaaaaaaaaaaaa');
+          res.send('Incorrect Username and/or Password!');
+        } else {
+         res.render('quiz_view',{
+            });
+
+        }
+      })
   }
   else {
      res.redirect('/login_page');
