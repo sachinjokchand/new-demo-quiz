@@ -250,7 +250,6 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
   
   var i;
-  var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
@@ -273,19 +272,15 @@ app.post('/submit_test',(req, res) => {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
          
-          // if(results.rows[i].answer == answer[i] )
-          // {
-          //    correct ++;
-          // }
-          console.log(results.rows[i].answer);
-           console.log(answer[i]);
-         // res.render('user_quiz',{
-         //      results: results.rows
-         //    });
+          console.log(results.rows[i].answer)
+         
+          // console.log(results.rows);
+         res.render('user_quiz',{
+              results: results.rows
+            });
         }
       })
      } 
-      res.send('Your Results Out Of '+total+'/'+correct);
     }
   else {
      res.redirect('/login_page');
