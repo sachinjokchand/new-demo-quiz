@@ -107,7 +107,9 @@ app.post('/login',(req, res) => {
     }
         conn.query(query, (err, results) => {
         if (err) {
-          console.log(err.stack)
+          console.log(err.stack);
+           console.log(err.stack)
+            console.log("aaaaaaaaaaaaaa");
           res.send('Incorrect Username and/or Password!');
         } else {
           req.session.loggedin = true;
