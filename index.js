@@ -247,7 +247,7 @@ app.get('/view_quiz',(req, res) => {
 
   });
 
-app.get('/submit_test',(req, res) => {  
+app.post('/submit_test',(req, res) => {  
 
   var total    = req.body.total;
   for (var i = 0; i <total.length; i++) {
