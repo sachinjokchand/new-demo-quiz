@@ -250,10 +250,6 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
 
   var total    = req.body.total;
-   console.log(total)
-      console.log("hello")
-        console.log(total);
-      console.log("hello");
   for (var i = 0; i <total.length; i++) {
    
    var question_id = req.body.question+i;
@@ -261,7 +257,7 @@ app.post('/submit_test',(req, res) => {
    console.log(question_id);
    console.log(answer)
     console.log(total)
-      console.log("hello")
+      console.log("hello"+1)
 
    if (req.session.loggedin) {
     const query = {
