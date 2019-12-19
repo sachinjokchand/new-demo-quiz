@@ -45,20 +45,22 @@ hr {
   <div class="container">
     <h2>Question List</h2>
         
-       <form method=>
+       <form action="/submit_test" method="post">
+          <%  $j = 0; %>
           <%  $i = 0; %>
     
         <% results.forEach((result) => { %>
           
-            <div class='ask'><%= result.question %></div>
+            <div class='ask'> Q. <%= $i %><%= result.question %></div>
+             <input type="hidden" name="question<%= $i %>" value="<%= result.id %>">
              <p id='center'><input type="radio" name="<%= $i %>" value="<%= result.option1 %>"> <%= result.option1 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option2 %>"> <%= result.option2 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option3 %>"> <%= result.option3 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option4 %>"> <%= result.option4 %>
             </p><hr>
-            <%  $i ++; %>
+            <% $j = $i ++; %>
         
-       <% }) %>      
+       <% }) %> <input type="hidden" name="total" value="<%  $j %>">
        <p align='center'><input type="submit" value="submit test"></p></form>
       
         

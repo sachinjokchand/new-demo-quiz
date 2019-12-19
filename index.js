@@ -247,5 +247,38 @@ app.get('/view_quiz',(req, res) => {
 
   });
 
+app.get('/submit_test',(req, res) => {  
+
+  var total    = req.body.total;
+  for (var i = 0; i <total.length; i++) {
+   
+   var question_id = req.body.question.i;
+   var answer    = req.body.i;
+   console.log(question_id);
+   console.log(answer);
+
+   if (req.session.loggedin) {
+    const query = {
+      text: 'SELECT * FROM quiz'
+     }
+     conn.query(query, (err, results) => {
+        if (err) {
+          console.log(err.stack+'aaaaaaaaaaaaaa');
+        } else {
+          console.log(results.rows);
+         res.render('user_quiz',{
+              results: results.rows
+            });
+
+        }
+      })
+     } 
+   }
+  else {
+     res.redirect('/login_page');
+  }
+
+  });
+
 //server listening
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
