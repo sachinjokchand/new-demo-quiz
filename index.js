@@ -98,7 +98,6 @@ app.post('/login',(req, res) => {
         } else {
           req.session.loggedin = true;
           req.session.username = username;
-          req.session.username = password;
           res.redirect('/home');
           console.log(results.rows[0])
         }
@@ -111,7 +110,7 @@ app.post('/login',(req, res) => {
 });
 
 app.get('/home',(req, res) => {  
-  if (req.session.loggedin && req.session.username && req.password) {
+  if (req.session.loggedin) {
     res.render('home');
   }
   else {
