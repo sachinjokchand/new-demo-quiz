@@ -254,7 +254,7 @@ app.post('/submit_test',(req, res) => {
    
    var question_id = req.body.question+i;
    var answer    = req.body.answer+i;
-    var option    = req.body.i;
+    var option    = req.body.0;
    console.log(question_id);
    console.log(answer)
      console.log(option)
