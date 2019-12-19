@@ -175,9 +175,7 @@ app.post('/add_question',(req, res) => {
           res.redirect('/login_page');
         console.log(err);
       } else {
-          res.render('quiz_view',{
-            results: results
-          });
+         res.redirect('/view_quiz');
         console.log(results);
       }
     })
@@ -204,15 +202,17 @@ app.get('/view_quiz',(req, res) => {
   if (req.session.loggedin) {
    const query = {
       // give the query a unique name
-      name: 'fetch-user',
+      name: 'fetch-quiz',
       text: 'SELECT * FROM quiz',
      }
         conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
-           res.redirect('/add_quiz');
+           res.send('Incorrect details od Data!');
         } else {
-          res.redirect('/view_quiz');
+         res.render('quiz_view',{
+              results: results
+            });
           console.log(results);
         }
       })
