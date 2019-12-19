@@ -168,7 +168,7 @@ app.get('/give_quiz',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-          console.log(results.rows);
+          // console.log(results.rows);
          res.render('user_quiz',{
               results: results.rows
             });
@@ -231,9 +231,9 @@ app.get('/view_quiz',(req, res) => {
      }
      conn.query(query, (err, results) => {
         if (err) {
-          console.log(err.stack+'aaaaaaaaaaaaaa');
+          // console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-          console.log(results.rows);
+          // console.log(results.rows);
          res.render('quiz_view',{
               results: results.rows
             });
@@ -256,6 +256,7 @@ app.post('/submit_test',(req, res) => {
    var answer    = req.body.answer.i;
    console.log(question_id);
    console.log(answer);
+    console.log(i);
 
    if (req.session.loggedin) {
     const query = {
