@@ -273,11 +273,10 @@ app.get('/submit_test',(req, res) => {
         }
       })
      } 
-   }
   else {
      res.redirect('/login_page');
+   }
   }
-
   });
 
 //server listening
