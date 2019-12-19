@@ -108,18 +108,12 @@ app.post('/login',(req, res) => {
         conn.query(query, (err, results) => {
         if (err) {
           console.log(err.stack)
-           console.log(err.stack)
-            console.log("aaaaaaaaaaaaaa")
           res.send('Incorrect Username and/or Password!');
         } else {
           req.session.loggedin = true;
           req.session.username = username;
           res.redirect('/home');
-          console.log(results.rows[0]);
-            console.log(results);
-            console.log("ssssssssss");
-            console.log("aaaaaaaaaaa")
-
+          // console.log(results.rows[0]);
         }
       })
   }
@@ -210,6 +204,7 @@ app.get('/view_quiz',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
+          console.log(results.rows[0])
          res.render('quiz_view',{
               results: results.rows[0]
             });
