@@ -254,6 +254,7 @@ app.post('/submit_test',(req, res) => {
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
+   console.log(total)
   for (i = 0 ; i <=total.length; i++) {
 
      question_id[i] = req.body.question[i];
