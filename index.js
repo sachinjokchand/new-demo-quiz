@@ -85,7 +85,7 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
 
-   var query = {
+   const query = {
       // give the query a unique name
       name: 'fetch-user',
       text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
