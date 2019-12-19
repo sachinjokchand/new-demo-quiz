@@ -172,11 +172,13 @@ app.post('/add_question',(req, res) => {
          }
      conn.query(query, (err, results) => {
       if (err) {
-          res.redirect('/view_quiz');
+          res.redirect('/login_page');
         console.log(err);
       } else {
-          res.redirect('/login_page');
-        console.log(results.rows[0]);
+          res.render('quiz_view',{
+            results: results
+          });
+        console.log(results);
       }
     })
 });
