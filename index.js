@@ -204,9 +204,11 @@ app.get('/view_quiz',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-          console.log(results.rows[0])
+          query.on('row', (row) => {
+            results.push(row);
+          });
          res.render('quiz_view',{
-              results: results.rows[0]
+              results: results
             });
 
         }
