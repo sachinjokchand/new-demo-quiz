@@ -197,15 +197,20 @@ app.post('/delete',(req, res) => {
 
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
-    const results = [];
-   const query = conn.query("SELECT * FROM quiz ORDER BY id ASC");
-    // Stream results back one row at a time
-    query.on('row', (row) => {
-      results.push(row);
-    });
-     res.render('quiz_view',{
-      results: results
-    });
+    const query = {
+      text: 'SELECT * FROM quiz'
+     }
+     conn.query(query, (err, results) => {
+        if (err) {
+          console.log(err.stack+'aaaaaaaaaaaaaa');
+        } else {
+          console.log(results.rows);
+         res.render('quiz_view',{
+              results: results.rows
+            });
+
+        }
+      })
   }
   else {
      res.redirect('/login_page');
