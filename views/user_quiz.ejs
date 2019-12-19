@@ -58,7 +58,7 @@ hr {
              <input type="radio" name="<%= $i %>" value="<%= result.option3 %>"> <%= result.option3 %>
              <input type="radio" name="answer<%= $i %>" value="<%= result.option4 %>"> <%= result.option4 %>
             </p><hr>
-            <%  j = $i ++; %>
+            <%   $i ++; %>
         
        <% }) %> <input type="hidden" name="total" value="<%= $i %>">
        <p align='center'><input type="submit" value="submit test"></p></form>
