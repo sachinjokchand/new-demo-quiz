@@ -54,10 +54,10 @@ hr {
             <div class='ask'> Q. <%= $i %>  <%= result.question %></div>
              <input type="hidden" name="question" value="<%= result.id %>">
              <p id='center'>
-               <input type="radio" name="option<%= $i %>" value="<%= result.option1 %>"> <%= result.option1 %>
-                <input type="radio" name="option<%= $i %>" value="<%= result.option2 %>"> <%= result.option2 %>
-                <input type="radio" name="option<%= $i %>" value="<%= result.option3 %>"> <%= result.option3 %>
-                <input type="radio" name="option<%= $i %>" value="<%= result.option4 %>"> <%= result.option4 %>
+               <input type="radio" name="<%= $i %>" value="<%= result.option1 %>"> <%= result.option1 %>
+                <input type="radio" name="<%= $i %>" value="<%= result.option2 %>"> <%= result.option2 %>
+                <input type="radio" name="<%= $i %>" value="<%= result.option3 %>"> <%= result.option3 %>
+                <input type="radio" name="<%= $i %>" value="<%= result.option4 %>"> <%= result.option4 %>
               
             </p><hr>
             <%   $i ++; %>
