@@ -250,15 +250,14 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
 
   var total    = req.body.total;
-  for (var i = 1; i <total.length; i++) {
+  for (var i = 0; i <total.length; i++) {
    
-   var question_id = req.body.question1;
-   var answer    = req.body.answer1;
-    var option    = req.body.option1;
-   console.log(question_id);
-   console.log(answer)
+    var question_id = req.body.question;
+    var option    = req.body.i;
+    
+     console.log(question_id);
      console.log(option)
-    console.log(total)
+   
       console.log("hello"+i)
 
    if (req.session.loggedin) {
