@@ -51,7 +51,7 @@ hr {
     
         <% results.forEach((result) => { %>
           
-            <div class='ask'> Q. <%= $ $i %>  <%= result.question %></div>
+            <div class='ask'> Q. <%= $i %>  <%= result.question %></div>
              <input type="hidden" name="question<%= $i %>" value="<%= result.id %>">
              <p id='center'><input type="radio" name="<%= $i %>" value="<%= result.option1 %>"> <%= result.option1 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option2 %>"> <%= result.option2 %>

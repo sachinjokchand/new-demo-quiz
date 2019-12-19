@@ -250,7 +250,7 @@ app.get('/view_quiz',(req, res) => {
 app.post('/submit_test',(req, res) => {  
 
   var total    = req.body.total;
-  for (var i = 1; i <total.length; i++) {
+  for (var i = 0; i <total.length; i++) {
    
    var question_id = req.body.question+i;
    var answer    = req.body.answer+i;
