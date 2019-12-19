@@ -277,14 +277,15 @@ app.post('/submit_test',(req, res) => {
           {
              correct ++;
           }
-          // console.log(results.rows);
+          console.log(results.rows[i].answer);
+           console.log(answer[i]);
          // res.render('user_quiz',{
          //      results: results.rows
          //    });
         }
       })
      } 
-      res.send('Your Results Out Of'+total+'/'+correct);
+      res.send('Your Results Out Of '+total-1+'/'+correct);
     }
   else {
      res.redirect('/login_page');
