@@ -249,20 +249,21 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
+  var i;
   var correct = 0;
   var answer = [];
-  // var question_id = [];
+  var question_id = [];
   var total    = req.body.total;
    console.log(total)
-  for (var i = 0 ; i <=total.length; i++) {
+  for (i = 0 ; i <=total.length; i++) {
 
-     question_id = req.body.question;
+     question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
-    console.log(req.body.question)
+    
     }
-    for (var j = 0 ; j <=total.length; j++) {
+    for (i = 0 ; i <=total.length; i++) {
       console.log(question_id[i])
-      console.log(answer[j])
+      console.log(answer[i])
        console.log("answer")
      }
    if (req.session.loggedin) {
