@@ -255,13 +255,13 @@ app.post('/submit_test',(req, res) => {
   var question_id = [];
   var total    = req.body.total;
    console.log(total)
-  for (i = 0 ; i <=total.length; i++) {
+  for (i = 0 ; i <=3; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
     
     }
-    for (i = 0 ; i <=total.length; i++) {
+    for (i = 0 ; i <=3; i++) {
       console.log(question_id[i])
       console.log(answer[i])
        console.log("answer")
