@@ -117,8 +117,6 @@ app.post('/login',(req, res) => {
           res.redirect('/home');
           console.log(results);
             console.log(results)
-            console.log("aaaaaaaaaaaaaa");
-            console.log("aaaaaaaaaaaaaa")
         }
       })
   }
@@ -211,6 +209,7 @@ app.get('/view_quiz',(req, res) => {
           res.send('Incorrect Username and/or Password!');
         } else {
          res.render('quiz_view',{
+              results: results
             });
 
         }
