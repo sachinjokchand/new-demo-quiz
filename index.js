@@ -261,9 +261,9 @@ app.post('/submit_test',(req, res) => {
     
     }
     for (i = 0 ; i <=total.length; i++) {
-      // console.log(question_id[i])
-      // console.log(answer[i])
-      //  console.log("answer")
+      console.log(question_id[i])
+      console.log(answer[i])
+       console.log("answer")
      }
    if (req.session.loggedin) {
      for (i = 0 ; i <=total.length; i++) {
@@ -285,7 +285,7 @@ app.post('/submit_test',(req, res) => {
         }
       })
      }
-     res.send('Please enter Username and Password!');
+     res.send('results'+correct);
     }
   else {
      res.redirect('/login_page');
