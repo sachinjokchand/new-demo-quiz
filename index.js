@@ -271,7 +271,7 @@ app.post('/submit_test',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-         forEach(results.rows, (row) => {
+         while(results.rows, (row) => {
           console.log(row.answer)
          });
           // console.log(results.rows);
