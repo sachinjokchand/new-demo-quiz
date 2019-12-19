@@ -53,7 +53,7 @@ hr {
           
             <div class='ask'> Q. <%= $i+1 %>  <%= result.question %></div>
              <input type="hidden" name="question<%= $i %>" value="<%= result.id %>">
-               <input type="hidden" name="i" value="<%= result.id %>">
+                <input type="text" name="option1" value="<%= result.id %>">
              <p id='center'><input type="radio" name="<%= $i %>" value="<%= result.option1 %>"> <%= result.option1 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option2 %>"> <%= result.option2 %>
              <input type="radio" name="<%= $i %>" value="<%= result.option3 %>"> <%= result.option3 %>
