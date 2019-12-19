@@ -51,11 +51,11 @@ hr {
         <% results.forEach((result) => { %>
           
             <div class='ask'><%= result.question %></div>
-          
+             <div class='ask'><%= results %></div>
              <p id='center'><input type="radio" name="<%= $i %>" value="<%= result.option1 %>"> 
-             <input type="radio" name="<%= $i %>" value="<%= result.option2 %>"><br> 
-             <input type="radio" name="<%= $i %>" value="<%= result.option3 %>"><br>
-             <input type="radio" name="<%= $i %>" value="<%= result.option4 %>"><br>
+             <input type="radio" name="<%= $i %>" value="<%= result.option2 %>">
+             <input type="radio" name="<%= $i %>" value="<%= result.option3 %>">
+             <input type="radio" name="<%= $i %>" value="<%= result.option4 %>">
             </p><hr>
             <%  $i ++; %>
         
