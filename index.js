@@ -85,19 +85,20 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
 
-   const query = {
+   var sql = {
       // give the query a unique name
       name: 'fetch-user',
       text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
       values: [username, password],
     }
-        conn.query(query, (err, results) => {
+        conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
         } else {
           req.session.loggedin = true;
           req.session.username = username;
+          req.session.username = password;
           res.redirect('/home');
           console.log(results.rows[0])
         }
@@ -110,7 +111,7 @@ app.post('/login',(req, res) => {
 });
 
 app.get('/home',(req, res) => {  
-  if (req.session.loggedin) {
+  if (req.session.loggedin && req.session.username && req.password) {
     res.render('home');
   }
   else {
