@@ -254,13 +254,13 @@ app.post('/submit_test',(req, res) => {
   var question_id = [];
   var total    = req.body.total;
    console.log(total)
-  for (var i = 0 ; i <=total; i++) {
+  for (var i = 0 ; i <total; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
     
     }
-    for (var j = 0 ; j <=total; j++) {
+    for (var j = 0 ; j <total; j++) {
       console.log(question_id[j])
       console.log(answer[j])
        console.log("answer")
@@ -277,7 +277,7 @@ app.post('/submit_test',(req, res) => {
           if(results.rows[0].answer == answer[i] )
           {
             correct++;
-          console.log(results.rowsresults.rows[0].answer);
+          console.log(results.rows[0].answer);
           }
          // res.render('user_quiz',{
          //      results: results.rows
