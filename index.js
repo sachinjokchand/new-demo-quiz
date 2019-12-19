@@ -275,7 +275,7 @@ app.post('/submit_test',(req, res) => {
         if (err) {
           console.log(err.stack+'aaaaaaaaaaaaaa');
         } else {
-         
+           var i =  0;
           console.log(results.rows)
            console.log(results.rows[0].answer);
             console.log(i)
@@ -285,6 +285,7 @@ app.post('/submit_test',(req, res) => {
             correct++;
           console.log(results.rows[0].answer);
           }
+          i++;
          // res.render('user_quiz',{
          //      results: results.rows
          //    });
