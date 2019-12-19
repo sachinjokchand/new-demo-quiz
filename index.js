@@ -188,7 +188,7 @@ app.get('/view_quiz',(req, res) => {
      }
         conn.query(query, (err, results) => {
         if (err) {
-          console.log(err.stack)
+          console.log(err);
            res.send('Incorrect details od Data!');
         } else {
          res.render('quiz_view',{
