@@ -254,7 +254,7 @@ app.post('/submit_test',(req, res) => {
   var question_id = [];
   var total    = req.body.total;
    console.log(total)
-  for (var i = 0 ; i <total; i++) {
+  for (var i = 1 ; i <=total; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
@@ -266,7 +266,7 @@ app.post('/submit_test',(req, res) => {
        console.log("answer")
      }
    if (req.session.loggedin) {
-     for (var i = 0 ; i <total; i++) {
+     for (var i = 1 ; i <=total; i++) {
      let sql = "SELECT answer FROM quiz WHERE id="+question_id[i]+"";
      let query = conn.query(sql, (err, results) => {
         if (err) {
