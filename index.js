@@ -279,6 +279,7 @@ app.post('/submit_test',(req, res) => {
         let query = conn.query(sql, (err, results) => {
            console.log(results.rows)
             console.log(err)
+            console.log(i)
           // console.log(results.rows)
        
        })
