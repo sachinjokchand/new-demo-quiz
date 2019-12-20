@@ -199,9 +199,8 @@ app.post('/add_question',(req, res) => {
      conn.query(query, (err, results) => {
       if (err) {
           res.redirect('/home');
-          console.log(err);
+        console.log(err);
       } else {
-          console.log(results);
           res.redirect('/view_quiz');
         // console.log(results.rows[0]);
       }
