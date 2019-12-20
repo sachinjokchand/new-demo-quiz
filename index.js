@@ -276,7 +276,7 @@ app.post('/submit_test',(req, res) => {
            {
             correct++;
             console.log(correct);
-            console.log('option');
+            console.log('option'+j);
             console.log(question_id[j])
             console.log(answer[j])
            }
