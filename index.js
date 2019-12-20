@@ -261,33 +261,30 @@ app.post('/submit_test',(req, res) => {
      answer[i]    = req.body.option[i];  
     
     }
-    // for (var j = 0 ; j <total-1; j++) {
-    //   console.log(question_id[j])
-    //   console.log(answer[j])
-    //    console.log("answer")
-    //  }
    if (req.session.loggedin) {
-     // for (var j = 0 ; j <total-1; j++) {
-       for(var i in question_id) {
-        console.log(answer[i])
-         console.log(i)
-        console.log(question_id[i])
-        
 
-     
-         let sql = "SELECT * FROM quiz WHERE id='"+question_id[i]+"' AND answer='"+answer[i]+"'";
+        let sql = "SELECT * FROM quiz";
         let query = conn.query(sql, (err, results) => {
-           console.log(results.rows)
-            console.log(err)
-            console.log(i)
-          // console.log(results.rows)
-       
-       })
-     
-     }
+           
+          console.log(results.rows)
+        if (results.rows.length > 0) {
+        for (var j = 0 ; j <total-1; j++) {
+            console.log(results.rows[i])
+            console.log('option');
+            console.log(question_id[j])
+            console.log(answer[j])
+         
+           }
+           res.send('results '+correct);
+          console.log(results.rows);
+        }
+        else {
 
+  
+        }
+      })
+     }
      res.send('results '+correct);
-    }
   else {
      res.redirect('/login_page');
    }
