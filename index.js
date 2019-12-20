@@ -99,13 +99,8 @@ app.post('/login',(req, res) => {
   var password = req.body.password;
   if (username && password) {  
 
-   const query = {
-      // give the query a unique name
-      name: 'fetch-user',
-      text: 'SELECT * FROM user_data WHERE email = $1 AND password = $2',
-      values: [username, password],
-    }
-        conn.query(query, (err, results) => {
+         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
+        let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
