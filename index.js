@@ -275,6 +275,7 @@ app.post('/submit_test',(req, res) => {
           if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
            {
             correct++;
+            console.log(correct)
            }
   
             console.log('option');
