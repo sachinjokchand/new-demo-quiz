@@ -276,7 +276,7 @@ app.post('/submit_test',(req, res) => {
            console.log(err.stack+'aaaaaaaaaaaaaa');
          } else {
          
-            console.log(results.rows)
+            console.log(results.rows);
             console.log(results.rows[0].answer);
             console.log(j)
             console.log(answer[j])
