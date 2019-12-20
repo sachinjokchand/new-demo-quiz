@@ -280,11 +280,10 @@ app.post('/submit_test',(req, res) => {
         }
         else {
 
-  
+  console.log(err);
         }
       })
      }
-     res.send('results '+correct);
   else {
      res.redirect('/login_page');
    }
