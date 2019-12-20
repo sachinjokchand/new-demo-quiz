@@ -284,7 +284,7 @@ app.post('/submit_test',(req, res) => {
             console.log(results.rows[j])
          
            }
-           res.redirect('/give_quiz');
+           
            res.send('results '+correct);
         }
         else {
