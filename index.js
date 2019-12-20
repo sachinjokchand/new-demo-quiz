@@ -74,7 +74,7 @@ app.get('/',(req, res) => {
 app.post('/signup',(req, res) => {
   let data = {name: req.body.name, last_name: req.body.last_name, email: req.body.email, contact: req.body.contact, password: req.body.password};
 
-   let sql = "SELECT * FROM user_data WHERE email='"+email+"'";
+   let sql = "SELECT * FROM user_data WHERE email='"+req.body.email+"'";
         let query = conn.query(sql, (err, results) => {
         if (results.rows.length > 0) {
            res.send('Emial already exist');
