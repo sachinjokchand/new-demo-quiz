@@ -271,13 +271,13 @@ app.post('/submit_test',(req, res) => {
         console.log(question_id[j])
         console.log(answer[j])
 
-        let sql = "SELECT answer FROM quiz WHERE id='"+question_id[j]+"'";
+        let sql = "SELECT answer FROM quiz WHERE answer='"+answer[j]+"'";
         let query = conn.query(sql, (err, results) => {
          if (results.rows.length > 0) {
             console.log(results.rows);
             console.log(results.rows[0].answer);
-            console.log(j)
             console.log(answer[j])
+            console.log('result'+results.rows.length)
           // console.log(results.rows[0]);
              }
         else {
