@@ -250,7 +250,7 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
-  var correct = 1;
+  var correct = 0;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
@@ -277,9 +277,9 @@ app.post('/submit_test',(req, res) => {
            {
             correct++;
              console.log(j+' '+results.rows[j].answer)
-           console.log(j+' '+results.rows[j].id)
-            console.log(j+' '+answer[j])
-           console.log(j+' '+question_id[j])
+             console.log(j+' '+results.rows[j].id)
+             console.log(j+' '+answer[j])
+             console.log(j+' '+question_id[j])
             }       
            }
 
