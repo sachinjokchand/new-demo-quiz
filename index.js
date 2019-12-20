@@ -98,26 +98,27 @@ app.post('/login',(req, res) => {
   var username = req.body.user_name;
   var password = req.body.password;
   if (username && password) {  
-    
+        
+    if(username =='admin' && password == '12345'){
+          res.redirect('/home');
+       }
+      else {
+
         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
         let query = conn.query(sql, (err, results) => {
         if (results.rows.length > 0) {
-          req.session.loggedin = true;
-          req.session.username = username;
-          if(username =='admin' && password == '12345'){
-          res.redirect('/home');
-          }
-          else
-          {
+           req.session.loggedin = true;
+           req.session.username = username;
+       
            res.redirect('/user_page');
-          }
           // console.log(results.rows[0]);
         }
         else {
           res.send('Incorrect Username and/or Password!');
         }
       })
-  }
+    }
+   }
   else {
     res.send('Please enter Username and Password!');
   }
