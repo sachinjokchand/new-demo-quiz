@@ -266,11 +266,11 @@ app.post('/submit_test',(req, res) => {
         let sql = "SELECT * FROM quiz";
         let query = conn.query(sql, (err, results) => {
            
-          console.log(results.rows[0].answer)
-           console.log(results.rows[0].id)
+          // console.log(results.rows[0].answer)
+          //  console.log(results.rows[0].id)
             console.log('option');
         if (results.rows.length > 0) {
-        for (var j = 0 ; j <total-1; j++) {
+        for (var j = 0 ; j <total; j++) {
          
           if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
            {
