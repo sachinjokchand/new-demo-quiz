@@ -98,13 +98,14 @@ app.post('/login',(req, res) => {
   var username = req.body.user_name;
   var password = req.body.password;
   if (username && password) {  
-
-         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
+    
+        let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
         let query = conn.query(sql, (err, results) => {
         if (err) {
           console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
         } else {
+          console.log(results)
           req.session.loggedin = true;
           req.session.username = username;
           if(username =='admin' && password == '12345'){
@@ -155,7 +156,7 @@ app.get('/user_page',(req, res) => {
 
 
 app.get('/give_quiz',(req, res) => {  
-  if (req.session.loggedin) {
+  if (req.session.loggedin && req.session.username) {
     const query = {
       text: 'SELECT * FROM quiz'
      }
