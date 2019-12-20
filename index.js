@@ -201,6 +201,7 @@ app.post('/add_question',(req, res) => {
           res.redirect('/home');
         console.log(err);
       } else {
+          console.log(results);
           res.redirect('/view_quiz');
         // console.log(results.rows[0]);
       }
@@ -267,27 +268,24 @@ app.post('/submit_test',(req, res) => {
     //  }
    if (req.session.loggedin) {
      for (var j = 0 ; j <total-1; j++) {
-      console.log(question_id[j])
-      console.log(answer[j])
+        console.log(question_id[j])
+        console.log(answer[j])
 
-     let sql = "SELECT answer FROM quiz WHERE id="+question_id[j]+"";
-     let query = conn.query(sql, (err, results) => {
-        if (err) {
-          console.log(err.stack+'aaaaaaaaaaaaaa');
-        } else {
+        let sql = "SELECT answer FROM quiz WHERE id="+question_id[j]+"";
+        let query = conn.query(sql, (err, results) => {
+         if (err) {
+           console.log(err.stack+'aaaaaaaaaaaaaa');
+         } else {
          
-          console.log(results.rows)
-           console.log(results.rows[0].answer);
+            console.log(results.rows)
+            console.log(results.rows[0].answer);
             console.log(j)
-           console.log(answer[j])
+            console.log(answer[j])
           if( answer[j] == results.rows[0].answer )
           {
             correct++;
-          console.log(results.rows[0].answer);
+            console.log(results.rows[0].answer);
           }
-         // res.render('user_quiz',{
-         //      results: results.rows
-         //    });
         }
       })
      }
