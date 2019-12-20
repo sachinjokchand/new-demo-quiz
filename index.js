@@ -270,7 +270,7 @@ app.post('/submit_test',(req, res) => {
          
             console.log('option');
         if (results.rows.length > 0) {
-        for (var j = 1; j <total; j++) {
+        for (var j = 0; j <total-1; j++) {
           
           
           if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
