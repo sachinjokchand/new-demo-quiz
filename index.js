@@ -106,6 +106,7 @@ app.post('/login',(req, res) => {
           res.send('Incorrect Username and/or Password!');
         } else {
           console.log(results.rows)
+          console.log('aaaaaaaaaaaa')
           req.session.loggedin = true;
           req.session.username = username;
           if(username =='admin' && password == '12345'){
