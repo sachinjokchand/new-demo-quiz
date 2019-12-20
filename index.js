@@ -80,7 +80,7 @@ app.post('/signup',(req, res) => {
            res.send('Emial already exist');
         }
         else{
-    const query = {
+       const query = {
         text: 'INSERT INTO user_data(name, last_name, email, contact, password ) VALUES($1, $2, $3, $4, $5)',
         values: [data.name, data.last_name, data.email, data.contact, data.password],
          }
@@ -94,6 +94,7 @@ app.post('/signup',(req, res) => {
       }
     });
    }
+  });
 });
 
 app.get('/login_page',(req, res) => {  
