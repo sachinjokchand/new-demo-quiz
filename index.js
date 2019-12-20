@@ -271,19 +271,22 @@ app.post('/submit_test',(req, res) => {
         console.log(question_id[j])
         console.log(answer[j])
 
-        let sql = "SELECT * FROM quiz WHERE answer='"+answer[i]+"' AND id='"+question_id[i]+"'";
+         let sql = "SELECT * FROM quiz WHERE id='"+question_id[i]+"' AND answer='"+answer[i]+"'";
         let query = conn.query(sql, (err, results) => {
-         
-            console.log(results);
-            console.log(results.rows[0].answer);
-            console.log(results.rows.length)
-            console.log(answer[j])
-
-         if (results.rows.length > 0) {
-          // console.log(results.rows[0]);
-             }
+           console.log(results)
+            console.log(i)
+          console.log(results.rows)
+        if (results.rows.length > 0) {
+          
+          console.log(results.rows);
+        }
         else {
-          console.log(err);
+
+           console.log(err);
+          console.log(results.rows);
+           console.log('aaaaaaaaa');
+            console.log(results.rows.length > 0);
+             console.log(results.rows.length);
           res.send('Incorrect Username and/or Password!');
         }
       })
