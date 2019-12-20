@@ -269,8 +269,9 @@ app.post('/submit_test',(req, res) => {
    if (req.session.loggedin) {
      // for (var j = 0 ; j <total-1; j++) {
        for(var i in question_id) {
-        console.log(answer[i].text)
-        console.log(question_id[i].value)
+        console.log(answer[i])
+         console.log(i)
+        console.log(question_id[i])
         
 
      
