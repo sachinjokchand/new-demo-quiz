@@ -279,7 +279,7 @@ app.post('/submit_test',(req, res) => {
             }       
            }
 
-           res.send('results '+total_question+'/'+correct);
+           res.send('results '+correct+'out of'+total_question);
         }
         else {
 
