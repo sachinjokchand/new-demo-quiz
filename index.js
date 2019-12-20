@@ -278,7 +278,7 @@ app.post('/submit_test',(req, res) => {
             }       
            }
 
-           res.send('results '+total+'/'+correct);
+           res.send('results '+total-1+'/'+correct);
         }
         else {
 
