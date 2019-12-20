@@ -102,8 +102,6 @@ app.post('/login',(req, res) => {
         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
         let query = conn.query(sql, (err, results) => {
         if (results.rows.length > 0) {
-          console.log(results.rows)
-          console.log('aaaaaaaaaaaa')
           req.session.loggedin = true;
           req.session.username = username;
           if(username =='admin' && password == '12345'){
@@ -116,10 +114,6 @@ app.post('/login',(req, res) => {
           // console.log(results.rows[0]);
         }
         else {
-          console.log(results.rows);
-           console.log('aaaaaaaaa');
-            console.log(results.rows.length > 0);
-             console.log(results.rows.length);
           res.send('Incorrect Username and/or Password!');
         }
       })
@@ -272,7 +266,8 @@ app.post('/submit_test',(req, res) => {
         if (results.rows.length > 0) {
         for (var j = 0; j <total-1; j++) {
              
-          if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
+          // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
+           if( answer[j] == results.rows[j].answer && question_id[j] == results.rows[j].id )   
            {
             correct++;
              console.log(j+' '+results.rows[j].answer)
