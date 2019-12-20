@@ -267,12 +267,13 @@ app.post('/submit_test',(req, res) => {
         let query = conn.query(sql, (err, results) => {
            
           console.log(results.rows)
+            console.log('option');
         if (results.rows.length > 0) {
         for (var j = 0 ; j <total-1; j++) {
-            console.log(results.rows[i])
             console.log('option');
             console.log(question_id[j])
             console.log(answer[j])
+            console.log(results.rows[j])
          
            }
            res.send('results '+correct);
