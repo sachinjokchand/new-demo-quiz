@@ -256,7 +256,7 @@ app.post('/submit_test',(req, res) => {
   var total    = req.body.total;
   var total_question = total-1;
    // console.log(total)
-  for (var i = 0 ; i <total-1; i++) {
+  for (var i = 1 ; i <total; i++) {
 
      question_id[i] = req.body.question[i];
      answer[i]    = req.body.option[i];  
@@ -270,7 +270,7 @@ app.post('/submit_test',(req, res) => {
          
             console.log('option');
         if (results.rows.length > 0) {
-        for (var j = 0; j <total-1; j++) {
+        for (var j = 1; j <total; j++) {
           
           
           if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
