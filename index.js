@@ -272,13 +272,14 @@ app.post('/submit_test',(req, res) => {
         if (results.rows.length > 0) {
         for (var j = 0; j <total-1; j++) {
           
-           console.log(j+' '+results.rows[j].answer)
-           console.log(j+' '+results.rows[j].id)
-            console.log(j+' '+answer[j])
-           console.log(j+' '+question_id[j])
+          
           if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
            {
             correct++;
+             console.log(j+' '+results.rows[j].answer)
+           console.log(j+' '+results.rows[j].id)
+            console.log(j+' '+answer[j])
+           console.log(j+' '+question_id[j])
             }       
            }
 
