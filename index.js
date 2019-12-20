@@ -267,8 +267,8 @@ app.post('/submit_test',(req, res) => {
     //  }
    if (req.session.loggedin) {
      for (var j = 0 ; j <total-1; j++) {
-        console.log(question_id[j])
-        console.log(answer[j])
+        // console.log(question_id[j])
+        // console.log(answer[j])
 
         let sql = "SELECT answer FROM quiz WHERE answer="+answer[j]+"";
         let query = conn.query(sql, (err, results) => {
