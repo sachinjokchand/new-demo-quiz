@@ -250,7 +250,7 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
-  var correct = 0;
+  var correct = 1;
   var answer = [];
   var question_id = [];
   var total    = req.body.total;
@@ -272,20 +272,13 @@ app.post('/submit_test',(req, res) => {
         if (results.rows.length > 0) {
         for (var j = 0; j <total-1; j++) {
          
-          if( results.rows[j-1].answer == answer[j-1] && results.rows[j-1].id == question_id[j-1] )
+          if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
            {
             correct++;
-            console.log(correct);
-            console.log('option'+j);
-            console.log(question_id[j-1])
-            console.log(answer[j-1])
-           }
-  
-          
-         
+            }       
            }
 
-           res.send('results '+correct);
+           res.send('results '+total+'/'+correct);
         }
         else {
 
