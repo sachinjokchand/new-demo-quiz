@@ -270,12 +270,12 @@ app.post('/submit_test',(req, res) => {
         console.log(question_id[j])
         console.log(answer[j])
 
-        let sql = "SELECT answer FROM quiz WHERE id="+question_id[j]+"";
+        let sql = "SELECT answer FROM quiz WHERE answer="+answer[j]+"";
         let query = conn.query(sql, (err, results) => {
          if (err) {
            console.log(err.stack+'aaaaaaaaaaaaaa');
          } else {
-            for (var j = 0 ; j <total-1; j++) {
+         
             console.log(results.rows);
             console.log(results.rows[0].answer);
             console.log(j)
@@ -284,7 +284,6 @@ app.post('/submit_test',(req, res) => {
           {
             correct++;
             console.log(results.rows[0].answer);
-          }
           }
         }
       })
