@@ -101,7 +101,7 @@ app.post('/login',(req, res) => {
     
         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
         let query = conn.query(sql, (err, results) => {
-        if (results.length > 0) {
+        if (results.rows.length > 0) {
           console.log(results.rows)
           console.log('aaaaaaaaaaaa')
           req.session.loggedin = true;
@@ -118,8 +118,8 @@ app.post('/login',(req, res) => {
         else {
           console.log(results.rows);
            console.log('aaaaaaaaa');
-            console.log(results.length > 0);
-             console.log(results.length);
+            console.log(results.rows.length > 0);
+             console.log(results.rows.length);
           res.send('Incorrect Username and/or Password!');
         }
       })
