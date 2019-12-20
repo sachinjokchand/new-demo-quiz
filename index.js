@@ -284,6 +284,9 @@ app.post('/submit_test',(req, res) => {
             console.log(results.rows[j])
          
            }
+            res.render('user_quiz',{
+              results: results.rows
+            });
            res.send('results '+correct);
         }
         else {
