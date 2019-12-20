@@ -267,17 +267,21 @@ app.post('/submit_test',(req, res) => {
     //    console.log("answer")
     //  }
    if (req.session.loggedin) {
-     for (var j = 0 ; j <total-1; j++) {
-        console.log(question_id[j])
-        console.log(answer[j])
+     // for (var j = 0 ; j <total-1; j++) {
+       for(var i in question_id) {
+        console.log(question_id[i])
+        console.log(answer[i])
+        
 
+     
          let sql = "SELECT * FROM quiz WHERE id='"+question_id[i]+"' AND answer='"+answer[i]+"'";
         let query = conn.query(sql, (err, results) => {
            console.log(results)
             console.log(err)
           // console.log(results.rows)
        
-      })
+       })
+     
      }
 
      res.send('results '+correct);
