@@ -116,7 +116,6 @@ app.post('/login',(req, res) => {
           // console.log(results.rows[0]);
         }
         else {
-          console.log(err.stack)
           res.send('Incorrect Username and/or Password!');
         }
       })
