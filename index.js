@@ -101,7 +101,7 @@ app.post('/login',(req, res) => {
     
         let sql = "SELECT * FROM user_data WHERE email='"+username+"' AND password='"+password+"'";
         let query = conn.query(sql, (err, results) => {
-         if($results) {
+         if(results) {
           console.log(results.rows)
           console.log('aaaaaaaaaaaa')
           req.session.loggedin = true;
