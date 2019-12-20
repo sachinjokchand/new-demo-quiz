@@ -270,15 +270,15 @@ app.post('/submit_test',(req, res) => {
           //  console.log(results.rows[0].id)
             console.log('option');
         if (results.rows.length > 0) {
-        for (var j = 0 ; j <total-1; j++) {
+        for (var j = 0; j <total-1; j++) {
          
-          if( results.rows[j].answer == answer[j] && results.rows[j].id == question_id[j] )
+          if( results.rows[j-1].answer == answer[j-1] && results.rows[j-1].id == question_id[j-1] )
            {
             correct++;
             console.log(correct);
             console.log('option'+j);
-            console.log(question_id[j])
-            console.log(answer[j])
+            console.log(question_id[j-1])
+            console.log(answer[j-1])
            }
   
           
