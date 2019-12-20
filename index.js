@@ -274,7 +274,7 @@ app.post('/submit_test',(req, res) => {
         let sql = "SELECT * FROM quiz WHERE answer='"+answer[i]+"' AND id='"+question_id[i]+"'";
         let query = conn.query(sql, (err, results) => {
          
-            console.log(results.rows);
+            console.log(results);
             console.log(results.rows[0].answer);
             console.log(results.rows.length)
             console.log(answer[j])
