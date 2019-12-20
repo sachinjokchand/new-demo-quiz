@@ -118,7 +118,8 @@ app.post('/login',(req, res) => {
         else {
           console.log(results.rows);
            console.log('aaaaaaaaa');
-            console.log(err);
+            console.log(results.length > 0);
+             console.log(results.length);
           res.send('Incorrect Username and/or Password!');
         }
       })
