@@ -215,7 +215,7 @@ app.post('/add_question',(req, res) => {
 });
 
 app.post('/update',(req, res) => {
-  let sql = "UPDATE quiz SET question='"+req.body.question+"', option1='"+req.body.option1+"' , option2='"+req.body.option2+"' , option3='"+req.body.option3+"' , option4='"+req.body.option4+"' , answer='"+req.body.answer+"' WHERE id="+req.body.id;
+  let sql = "UPDATE new_quiz SET question='"+req.body.question+"', option1='"+req.body.option1+"' , option2='"+req.body.option2+"' , option3='"+req.body.option3+"' , option4='"+req.body.option4+"' , answer='"+req.body.answer+"' WHERE id="+req.body.id;
   let query = conn.query(sql, (err, results) => {
     if(err) throw err;
     res.redirect('/view_quiz');
@@ -224,7 +224,7 @@ app.post('/update',(req, res) => {
  
 //route for delete data
 app.post('/delete',(req, res) => {
-  let sql = "DELETE FROM quiz WHERE id="+req.body.id+"";
+  let sql = "DELETE FROM new_quiz WHERE id="+req.body.id+"";
   let query = conn.query(sql, (err, results) => {
     if(err) throw err;
       res.redirect('/view_quiz');
