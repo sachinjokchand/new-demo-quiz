@@ -14,6 +14,15 @@
     position: relative;
     right: 5px;
   }
+   .dyanamic input{
+     float:left;
+    }
+  .warnig_msg{
+    right:20px;
+  }
+  input{
+    width: 100%;
+  }
   
  </style>
 </head>
@@ -27,11 +36,9 @@
         <tr>
           <th>Question ID</th>
           <th>Question Name</th>
-          <th>option 1</th>
-          <th>option 2</th>
-          <th>option 3</th>
-          <th>option 4</th>
+          <th>options</th>
           <th>Answer</th>
+          <th>quiz time</th>     
         </tr>
       </thead>
       <tbody>
@@ -39,13 +46,11 @@
         <tr>
           <td><%= result.id %></td>
           <td><%= result.question %></td>
-          <td><%= result.option1 %></td>
-          <td><%= result.option2 %></td>
-          <td><%= result.option3 %></td>
-          <td><%= result.option4 %></td>
+          <td><%= result.options %></td>
           <td><%= result.answer %></td>
+          <td><%= result.quiz_time %></td>
           <td>
-            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%= result.id %>" >Edit</a><br>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%= result.id %>">Edit</a><br>
             <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="<%= result.id %>">Delete</a>
           </td>
         </tr>
@@ -65,34 +70,29 @@
                  <span aria-hidden="true">&times;</span>
                </button>
              </div>
-             <div class="modal-body">
-               <div class="form-group">
-                   <textarea type="text"  style="width:100%;" name="question" class="form-control" placeholder="question" required></textarea>
-               </div>
+             <div class="modal-body add_question">
+           
+                   <textarea type="text"  style="width:100%;" name="question" class="form-control" placeholder="question" required></textarea><br>
+               
  
-               <div class="form-group">
-                   <input type="text" name="option1" class="form-control" placeholder="option1" required>
-               </div>
+                   <div class="option_field">
+                     <label> <input type="text" name="option[1]"  placeholder="option1" required> </label>
+                   </div>
+                   <label><input type="button" value="Add a option" class="add_option_field" /></label>
+ 
+                   <div class="answer_field">
+                     <label> <input type="text" name="answer[1]"  placeholder="answer1" required></label>
+                  </div>
+                   <label><input type="button" value="Add answer" class="add_answer_field" /></label>
 
-               <div class="form-group">
-                   <input type="text" name="option2" class="form-control" placeholder="option2" required>
-               </div>
-
-               <div class="form-group">
-                   <input type="text" name="option3" class="form-control" placeholder="option3" required>
-               </div>
-
-
-               <div class="form-group">
-                   <input type="text" name="option4" class="form-control" placeholder="option4" required>
-               </div>
-
-               <div class="form-group">
-                   <input type="text" name="answer" class="form-control" placeholder="answer" required>
-               </div>
+                  <div class="quiz_time">
+                     <label> <input type="text" name="quiz_time"  placeholder="enter question time" required></label>
+                 </div>
+                
              </div>
              <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
                <button type="submit" class="btn btn-primary">Save</button>
              </div>
            </div>
@@ -100,11 +100,13 @@
         </div>
      </form>
   
-   <% results.forEach((result) => { %>
+
+    <% results.forEach((result) => { %>
      <!-- Modal Update Product-->
    <form action="/update" method="post">
-       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal fade" id="EditModal<%= result.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
+
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
@@ -113,30 +115,22 @@
               </button>
             </div>
               <div class="modal-body">
+
                <div class="form-group">
-                   <textarea type="text" style="width:100%;" name="question" class="question<%= result.id %>" required><%= result.question %></textarea>
+                 Question  <textarea type="text" style="width:100%;" name="question" class="question<%= result.id %>" required><%= result.question %></textarea>
                </div>
  
                <div class="form-group">
-                   <input type="text" name="option1" class="option1<%= result.id %>" value="<%= result.option1 %>"  required>
+                 Options  <input type="text" name="options" class="options<%= result.id %>" value="<%= result.options %>"  required>
                </div>
-
+               
                <div class="form-group">
-                   <input type="text" name="option2" class="option2<%= result.id %>" value="<%= result.option2 %>" required>
+                 Answer  <input type="text" name="answer" class="answer<%= result.id %>" value="<%= result.answer %>" required>
                </div>
-
                <div class="form-group">
-                   <input type="text" name="option3" class="option3<%= result.id %>" value="<%= result.option3 %>" required>
+                  Time <input type="text" name="quiz_time" class="quiz_time<%= result.id %>" value="<%= result.quiz_time %>" required>
                </div>
 
-
-               <div class="form-group">
-                   <input type="text" name="option4" class="option4<%= result.id %>" value="<%= result.option4 %>" required>
-               </div>
-
-               <div class="form-group">
-                   <input type="text" name="answer" class="answer<%= result.id %>" value="<%= result.answer %>" required>
-               </div>
              </div>
             <div class="modal-footer">
               <input type="hidden" name="id" class="id" value="<%= result.id %>">
@@ -144,10 +138,11 @@
               <button type="submit" class="btn btn-primary">Update</button>
             </div>
           </div>
+
         </div>
        </div>
   </form>
-  <% }) %>
+ <% }) %>
      <!-- Modal Delete Product-->
       <form id="add-row-form" action="/delete" method="post">
          <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -157,8 +152,8 @@
                                         <h5 class="modal-title" id="myModalLabel">Delete Product</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                    </div>
-                   <div class="modal-body">
-                                                 <strong>Are you sure to delete this data?</strong>
+                   <div class="warnig_msg modal-body">
+                            <strong>Are you sure to delete this data?</strong>
                    </div>
                    <div class="modal-footer">
                                             <input type="hidden" name="id" class="form-control id2" required>
@@ -173,31 +168,59 @@
 <script src="/assets/js/jquery-3.3.1.js"></script>
 <script src="/assets/js/bootstrap.js"></script>
 <script>
-    $(document).ready(function(){
-            //showing data to edit modal      
-     $('#mytable').on('click','.edit',function(){
-        var id = $(this).data('id');
-        var question = $.trim($('.question'+id).val());
-        var option1  = $('.option1'+id).val();
-        var option2  = $('.option2'+id).val();
-        var option3  = $('.option3'+id).val();
-        var option4  = $('.option4'+id).val();
-        var answer   = $('.answer'+id).val();
+    jQuery(document).ready(function(){
+      var i =2; var j=2;
+      jQuery(".add_option_field").click(function() {
+        var fName = jQuery('<div class="form-group"><input type="text" name="option['+i+']" class="dyanamic" placeholder="option'+i+'" required></div>');
+        var removeButton = jQuery('<input type="button" class="dyanamic remove" value="-"/><input type="hidden" name="total_option" value="'+i+'"/>');
+        removeButton.click(function() {
+            jQuery(this).parent().remove();
+            i--;
+        });
+        fName.append(removeButton);
+        jQuery(".option_field").append(fName);
+        i++;
+    });
 
-        $('#EditModal').modal('show');
-        $('.question'+id).val(question);
-        $('.option1'+id).val(option1);
-        $('.option2'+id).val(option2);
-        $('.option3'+id).val(option3);
-        $('.option4'+id).val(option4);
-        $('.answer'+id).val(answer);
-        $('.id'+id).val(question);
+      jQuery(".add_answer_field").click(function() {
+        var fName = jQuery('<div class="form-group"><input type="text" name="answer['+j+']" class="dyanamic" placeholder="answer'+j+'" required></div>');
+        var removeButton = jQuery('<input type="button" class="remove" value="-"/><input type="hidden" name="total_answer" value="'+j+'"/>');
+        removeButton.click(function() {
+            jQuery(this).parent().remove();
+             j--;
+        });
+        fName.append(removeButton);
+        jQuery(".answer_field").append(fName);
+         j++;
+    });
+            //showing data to edit modal      
+     jQuery('#mytable').on('click','.edit',function(){
+        var id = jQuery(this).data('id');
+        console.log(id);
+        var question   = jQuery.trim(jQuery('.question'+id).val());
+        var options    = jQuery('.options'+id).val();
+        var quiz_time  = jQuery('.quiz_time'+id).val();
+        var answer     = jQuery('.answer'+id).val();
+
+        // console.log(question); 
+        // console.log(options);
+        //  console.log(answer);
+        //   console.log(quiz_time);
+
+
+        jQuery('#EditModal'+id).modal('show');
+
+        jQuery('.question'+id).val(question);
+        jQuery('.options'+id).val(options);
+        jQuery('.answer'+id).val(answer);
+        jQuery('.quiz_time'+id).val(quiz_time);
+        // jQuery('.id'+id).val(question);
       });
             //showing delete record modal
-     $('#mytable').on('click','.delete',function(){
-        var id = $(this).data('id');
-        $('#DeleteModal').modal('show');
-        $('.id2').val(id);
+     jQuery('#mytable').on('click','.delete',function(){
+        var id = jQuery(this).data('id');
+        jQuery('#DeleteModal').modal('show');
+        jQuery('.id2').val(id);
       });
     });
 </script>

@@ -166,7 +166,7 @@ app.get('/user_page',(req, res) => {
 app.get('/give_quiz',(req, res) => {  
   if (req.session.loggedin && req.session.username) {
     const query = {
-      text: 'SELECT * FROM quiz'
+      text: 'SELECT * FROM new_quiz'
      }
      conn.query(query, (err, results) => {
         if (err) {
@@ -189,16 +189,19 @@ app.get('/give_quiz',(req, res) => {
 app.post('/add_question',(req, res) => {
   
   var question = req.body.question;
-  var option1  = req.body.option1;
-  var option2  = req.body.option2;
-  var option3  = req.body.option3;
-  var option4  = req.body.option4;
-  var answer   = req.body.answer;
+  var options_array  = req.body.option;
+  var answer_array   = req.body.answer;
+  var quiz_time      = req.body.quiz_time;
 
-  let data = {question: question, option1: option1, option2: option2, option3: option3, option4: option4 , answer: answer};
+  var option_obj     = options_array.reduce(function(o, val) { o[val] = val; return o; }, {});
+  var answer_obj     = answer_array.reduce(function(o, val) { o[val] = val; return o; }, {});
+  var options        = JSON.stringify(option_obj);
+  var answer         = JSON.stringify(answer_obj);
+
+  let data = {question: question, options: options, answer: answer, quiz_time: quiz_time};
   const query = {
-        text: 'INSERT INTO quiz(question, option1, option2, option3, option4, answer ) VALUES($1, $2, $3, $4, $5, $6)',
-        values: [data.question, data.option1, data.option2, data.option3, data.option4, data.answer],
+        text: 'INSERT INTO new_quiz(question, options, answer, quiz_time ) VALUES($1, $2, $3, $4)',
+        values: [data.question, data.options, data.answer, data.quiz_time ],
          }
      conn.query(query, (err, results) => {
       if (err) {
