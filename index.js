@@ -234,7 +234,7 @@ app.post('/delete',(req, res) => {
 app.get('/view_quiz',(req, res) => {  
   if (req.session.loggedin) {
     const query = {
-      text: 'SELECT * FROM quiz'
+      text: 'SELECT * FROM new_quiz'
      }
      conn.query(query, (err, results) => {
         if (err) {
