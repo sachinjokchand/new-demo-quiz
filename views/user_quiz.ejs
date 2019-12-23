@@ -37,35 +37,153 @@ hr {
 #center{
  text-align: center;  
   }
-
+#tminus{
+      position: absolute;
+      right: 100px
+    }
   
- </style>
+</style>
 </head>
 <body>
   <div class="container">
     <h2>Question List</h2>
-        
-       <form action="/submit_test" method="post">
 
-          <%  $i = 1; %>
-    
-        <% results.forEach((result) => { %>
+         <form action="/submit_test" method="post" id="myForm">
+         <% $i =1; %>
           
-            <div class='ask'> Q. <%= $i %>  <%= result.question %></div>
-             <input type="hidden" name="question[<%= $i %>]" value="<%= result.id %>">
+          <% results.forEach((result) => { %>
+          <div class="quiz_container">
+             <div class="quiz_question">
+              <div class="left_time" id="left_time<%= $i %>"></div>
+                  <input id="tminus" class="tminus<%= $i %>" placeholder="0:00" value="" readonly/>
+           
+          
+             <div class='ask'> Q. <%= $i %>  <%= result.question %></div>
+             <input type="hidden" name="question" value="<%= result.id %>">
+             <input type="hidden" class="quiz_time<%= $i %>" name="quiz_time" value="<%= result.quiz_time %>">
              <p id='center'>
-               <input type="radio" name="option[<%= $i %>]" value="<%= result.option1 %>"> <%= result.option1 %>
-                <input type="radio" name="option[<%= $i %>]" value="<%= result.option2 %>"> <%= result.option2 %>
-                <input type="radio" name="option[<%= $i %>]" value="<%= result.option3 %>"> <%= result.option3 %>
-                <input type="radio" name="option[<%= $i %>]" value="<%= result.option4 %>"> <%= result.option4 %>
-              
-            </p><hr>
-            <%   $i ++; %>
-        
-       <% }) %> <input type="hidden" name="total" value="<%= $i %>">
-       <p align='center'><input type="submit" value="submit test"></p></form>
+             <%   new_options = result.options; %>
+             <%   jsonString = JSON.parse(new_options); %>
+                
+                <%for (var key in jsonString) { %>
+                 <input type="radio" name="option[<%= jsonString[key] %>]" value=""><%= jsonString[key] %>
+               <% }%>
+             
+            <% $i++; %>
+            
+            </p></div></div>
+        <% }) %>\
+
+         <input type="hidden" name="total" value="<%= $i %>">
+         <p align='center'><input id="btnNext" type="submit" value="next"></p></form>
       
      
-  </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+
+ 
+jQuery(document).ready(function(){ 
+/*code for next question*/
+var q = 1,  qMax = 0 , i = 1;  
+
+if (typeof(Storage) !== "undefined") {
+    
+      var last_div = localStorage.getItem("last_div");
+      console.log('last_div '+last_div)
+      if(last_div>1){
+      q = last_div;
+      localStorage.removeItem("last_div");
+    } 
+  }
+
+$('#btnNext').on('click', function (event) {
+       event.preventDefault();
+       handleClick();
+       i++;
+       set_time();
+     });
+
+$(function () {
+    qMax = $('#myForm div.quiz_container').length;
+    console.log(qMax);
+    $('#myForm div.quiz_container').hide();
+    $('#myForm div.quiz_container:nth-child('+q+')').show();
+    
+});
+ 
+function handleClick() {
+      if (q < qMax) {
+          $('#myForm div.quiz_container:nth-child(' + q + ')').hide();
+          $('#myForm div.quiz_container:nth-child(' + (q + 1) + ')').show();
+          if (q == (qMax - 1)) {
+
+              $('#btnNext').val('Submit Answers');
+          }
+          q++;
+      } else {
+          alert('Submitting'); // Add code to submit your form
+      }
+  }
+
+   /*code for set time*/
+
+  var totalAmount = localStorage.getItem('countDown') || 0, timeloop;
+
+  if (totalAmount) {
+      timeSet();
+   }
+
+ function timeSet () {
+  totalAmount--;
+  // Refresh value in localStorage
+  localStorage.setItem('countDown', totalAmount);
+
+   // If countdown is over, then remove value from storage and clear timeout
+   if (totalAmount < 0 ) {
+       localStorage.removeItem('countDown');
+       totalAmount = 0;
+       clearTimeout(timeloop);
+       return;
+   }
+
+
+  var seconds = parseInt(totalAmount%60);
+  var minutes = parseInt(totalAmount/60);
+     
+  if(!seconds){
+   $( "#btnNext" ).trigger( "click" );
+  }  
+
+  if(seconds < 10)
+      seconds = "0"+seconds;
+
+       $('.tminus'+i).val(minutes + ":" + seconds);
+
+   // console.log(minutes);
+   //  console.log(seconds);
+
+  timeloop = setTimeout(timeSet, 1000);
+  }
+    
+  set_time();
+
+  function set_time() {
+      var reqVal = jQuery('.quiz_time'+i).val();
+      console.log('sss'+reqVal);
+      var parAmt = parseInt(reqVal);
+
+      if (timeloop) {
+          clearTimeout(timeloop)
+      }
+
+      totalAmount = parAmt * 60;
+      timeSet();      
+   }
+
+});
+
+</script>
+
 </body>
 </html>

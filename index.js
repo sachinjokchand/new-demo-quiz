@@ -28,8 +28,8 @@ const conn = new Pool({
   connectionString : connString
 });
  
-  // conn.query(
-  // 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, last_name VARCHAR(40), email VARCHAR(40) not null, contact VARCHAR(10), password VARCHAR(8) not null, complete BOOLEAN)');
+  conn.query(
+  'CREATE TABLE new_quiz(id SERIAL PRIMARY KEY, question VARCHAR(255) not null, options VARCHAR(255), answer VARCHAR(255) not null, quiz_time VARCHAR(255))');
 
 //Create connection
 // var conn = mysql.createConnection({
