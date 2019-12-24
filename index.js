@@ -260,7 +260,8 @@ app.post('/submit_test',(req, res) => {
   var question = req.body.question;
   var options_array  = req.body.options;
   var total_question = question.length;
-  // console.log(total_question);
+  console.log(question);
+  console.log(options_array);
    
    if (req.session.loggedin) {
         let sql = "SELECT * FROM new_quiz";
