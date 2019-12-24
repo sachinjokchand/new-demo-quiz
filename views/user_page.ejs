@@ -7,6 +7,15 @@
 <h1>hello user</h1><br>
 <a href=/give_quiz>start Quiz</a><br>
 <a href=/logout>Logout</a>
-
+<script type="text/javascript">
+ function noBack()
+     {
+         window.history.forward()
+     }
+    noBack();
+    window.onload = noBack;
+    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+    window.onunload = function() { void (0) }
+</script>
 </body>
 </html>

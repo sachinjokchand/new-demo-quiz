@@ -256,49 +256,44 @@ app.get('/view_quiz',(req, res) => {
 
 app.post('/submit_test',(req, res) => {  
   
-  var correct = 0;
-  var answer = [];
-  var question_id = [];
-  var total    = req.body.total;
-  var total_question = total-1;
-   // console.log(total)
-  for (var i = 0 ; i <total-1; i++) {
-
-     question_id[i] = req.body.question[i];
-     answer[i]    = req.body.option[i];  
-    
-    }
+  var correct = 0;  
+  var question = req.body.question;
+  var options_array  = req.body.options;
+  var total_question = question.length;
+  // console.log(total_question);
+   
    if (req.session.loggedin) {
-
-        let sql = "SELECT * FROM quiz";
+        let sql = "SELECT * FROM new_quiz";
         let query = conn.query(sql, (err, results) => {
-           
-         
-            console.log('option');
+      
         if (results.rows.length > 0) {
-        for (var j = 0; j <total-1; j++) {
+          for(var i = 0; i<results.rows.length; i++) {
+             new_options = results.rows[i].answer;
+             answer_obj = JSON.parse(new_options);
              
-              console.log(j+' '+results.rows[j].answer)
-             console.log(j+' '+results.rows[j].id)
-             console.log(j+' '+answer[j])
-             console.log(j+' '+question_id[j])
-          // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
-           if( answer[j] == results.rows[j].answer && question_id[j] == results.rows[j].id )   
-           {
-            correct++;
+             for (var key in answer_obj) {
             
-            }       
+                  // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
+                 if( question[i] == results.rows[i].id && key == options_array[i])   
+                 {
+                  correct++;
+                   // console.log(correct);
+                 }       
+            }
+
+          }
+          var result_data = 'results '+correct+' out of '+total_question;
+          res.render('submit_page',{
+            result_data: result_data
+          });
+        }
+      else {
+           console.log(err);
            }
-
-           res.send('results '+correct+' out of '+total_question);
-        }
-        else {
-
-  console.log(err);
-        }
-      })
-     }
-  else {
+        })
+  }
+else {
+      // res.render('login_page');
      res.redirect('/login_page');
    }
   });
