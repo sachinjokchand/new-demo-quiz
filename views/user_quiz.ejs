@@ -80,95 +80,132 @@ input
       
      
 </div>
-<script src="/assets/js/jquery-3.3.1.js"></script>
 <script src="/assets/js/jquery.min.js"></script>
 <script type="text/javascript">
+ function noBack()
+   {
+      window.history.forward()
+   }
+    noBack();
+    window.onload = noBack;
+    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+    window.onunload = function() { void (0) }
 
 jQuery(document).ready(function(){ 
 /*code for next question*/
-var q = 1,  qMax = 0 , i = 1;  
+var q = 1,  qMax = 0 , i = 1, key_q =1;  
 
-if (typeof(Storage) !== "undefined") {
-    
-      var last_div = localStorage.getItem("last_div");
-      console.log('last_div '+last_div)
-      if(last_div>1){
-      q = last_div;
-      localStorage.removeItem("last_div");
-    } 
-  }
 
-$('#btnNext').on('click', function (event) {
-       event.preventDefault();
+ $('#btnNext').on('click', function (event) {
+     
+    if (q == qMax) {
+      // const $form = $('#myForm')
+      // $form.on('submit', submitHandler)
+
+      // function submitHandler (e) {
+      //   e.preventDefault()
+      //   $.ajax({
+      //     url: '/submit_test',
+      //     type:'POST',
+      //     data: $form.serialize()
+      //     }).done(response => {
+      //        jQuery('.container').html(response);
+      //    })
+      //  }
+     }  
+  else{ event.preventDefault();
        handleClick();
-       i++;
-       set_time();
-     });
+      }
+   });
+
+
+  if(localStorage.getItem('key_q')){
+    q = localStorage.getItem('key_q');
+    console.log(localStorage.getItem('key_q'));
+   }
 
 $(function () {
     qMax = $('#myForm div.quiz_container').length;
-    console.log(qMax);
-    $('#myForm div.quiz_container').hide();
-    $('#myForm div.quiz_container:nth-child('+q+')').show();
-    
+    // console.log(qMax);
+    $('#myForm div.quiz_container:nth-child('+q+')').addClass("active");
 });
+
  
 function handleClick() {
-      if (q < qMax) {
-          $('#myForm div.quiz_container:nth-child(' + q + ')').hide();
-          $('#myForm div.quiz_container:nth-child(' + (q + 1) + ')').show();
+      if (q < qMax && $('input[id=options'+q+']:checked').val()) {
+        // if (q < qMax ) {
+            
+          $('#myForm div.quiz_container:nth-child(' + q + ')').removeClass("active");
+          $('#myForm div.quiz_container:nth-child(' + (q + 1) + ')').addClass("active");
           if (q == (qMax - 1)) {
 
               $('#btnNext').val('Submit Answers');
           }
-          q++;
+
+           q++;
+           // localStorage.setItem('key_q', q);
+           // console.log('q value '+q);
+          /*set timer for next question*/
+           i++;
+           set_time();
       } else {
-          // alert('Submitting'); // Add code to submit your form
+          alert('select any one option'); // Add code to submit your form
       }
   }
 
+ 
+
+
    /*code for set time*/
 
-  var totalAmount = localStorage.getItem('countDown') || 0, timeloop;
+var totalAmount = localStorage.getItem('countDown') || 0, timeloop;
 
   if (totalAmount) {
       timeSet();
    }
 
  function timeSet () {
-  totalAmount--;
-  // Refresh value in localStorage
-  localStorage.setItem('countDown', totalAmount);
+      totalAmount--;
+      // Refresh value in localStorage
+      // localStorage.setItem('countDown', totalAmount);
 
-   // If countdown is over, then remove value from storage and clear timeout
-   if (totalAmount < 0 ) {
-       localStorage.removeItem('countDown');
-       totalAmount = 0;
-       clearTimeout(timeloop);
-       return;
-   }
+       // If countdown is over, then remove value from storage and clear timeout
+       if (totalAmount < 0 ) {
+           // localStorage.removeItem('countDown');
+           totalAmount = 0;
+           clearTimeout(timeloop);
+           return;
+       }
 
+       if( localStorage.getItem('countDown'))
+       {  
 
-  var seconds = parseInt(totalAmount%60);
-  var minutes = parseInt(totalAmount/60);
+         localStorage.setItem('countDown', totalAmount);
+         totalAmount1 = localStorage.getItem('countDown');
+         console.log(localStorage.getItem('countDown'));
+       }
      
-  if(!seconds){
-   $( "#btnNext" ).trigger( "click" );
-  }  
+       
+      var seconds = parseInt(totalAmount%60);
+      var minutes = parseInt(totalAmount/60);
+         
+      if(!minutes && !seconds ){
+       $( "#btnNext" ).trigger( "click" );
+      }  
 
-  if(seconds < 10)
-      seconds = "0"+seconds;
+      if(seconds < 10)
+          seconds = "0"+seconds;
 
-       $('.tminus'+i).val(minutes + ":" + seconds);
+           $('.tminus'+i).val(minutes + ":" + seconds);
 
-   // console.log(minutes);
-   //  console.log(seconds);
+       // console.log(minutes);
+       //  console.log(seconds);
 
-  timeloop = setTimeout(timeSet, 1000);
+      timeloop = setTimeout(timeSet, 1000);
   }
-    
-  set_time();
 
+
+  set_time();
   function set_time() {
       var reqVal = jQuery('.quiz_time'+i).val();
       console.log('sss'+reqVal);
@@ -181,10 +218,7 @@ function handleClick() {
       totalAmount = parAmt * 60;
       timeSet();      
    }
-
 });
-
 </script>
-
 </body>
 </html>
