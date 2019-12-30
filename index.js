@@ -178,7 +178,67 @@ app.get('/user_page',(req, res) => {
 
   });
 
+app.post('/setQuestionSession', function(req, res, next){ 
+   // console.log(req.body);
+   // console.log(JSON.stringify(req.body.correct_ans) );
 
+    sess = req.session;
+    var question_data = {
+            ques_id : req.body.ques_id,
+            ques_timer_time : req.body.timer_time,
+            count : req.body.count,
+            correct_ans : req.body.selected_option
+          }
+    sess.question_data = question_data;
+    var response =
+      {
+        'status':'1',
+        'massage': 'success',
+        'quesId': req.body.qid
+      };
+    res.send(response);
+    res.end();
+})
+
+
+app.post('/setCurrentQuestionTime', function(req, res, next){
+
+  sess = req.session;
+  var ques_id = req.body.ques_id;
+  var timer_time = req.body.timer_time;
+  var count = req.body.count;
+
+    if(sess.question_time){
+      var questionSession = sess.question_time;
+      if(questionSession.ques_id == ques_id){
+        sess.question_time.timer_time = timer_time;
+        sess.question_time.count = count;
+
+      }else{
+        var question_time = {
+        ques_id : req.body.ques_id,
+        timer_time : req.body.timer_time, 
+        count : count
+      } 
+      sess.question_time = question_time;
+      }
+    }else{
+      var question_time = {
+      ques_id : req.body.ques_id,
+      timer_time : req.body.timer_time,
+      count : count 
+    }
+       sess.question_time = question_time;
+    } 
+    var response = 
+      {
+        'status':'1',
+        'massage': 'success',
+        'quesId': req.body.ques_id
+      };
+    res.send(response);
+    res.end(); 
+})
 app.get('/give_quiz',(req, res) => {  
      sess = req.session;
    if(sess.question_data == '' ){
@@ -277,28 +337,6 @@ app.get('/view_quiz',(req, res) => {
   }
 
   });
-
-app.post('/setQuestionSession', function(req, res, next){ 
-   // console.log(req.body);
-   // console.log(JSON.stringify(req.body.correct_ans) );
-
-    sess = req.session;
-    var question_data = {
-            ques_id : req.body.ques_id,
-            ques_timer_time : req.body.timer_time,
-            count : req.body.count,
-            correct_ans : req.body.selected_option
-          }
-    sess.question_data = question_data;
-    var response =
-      {
-        'status':'1',
-        'massage': 'success',
-        'quesId': req.body.qid
-      };
-    res.send(response);
-    res.end();
-})
 
 
 app.post('/submit_test',(req, res) => { 
