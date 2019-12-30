@@ -406,7 +406,7 @@ else {
    }
 });
 
-app.get('/submit_test/(:result_data)', function(req, res, next){
+app.get('/submit_page/(:result_data)', function(req, res, next){
  
 console.log( req.params.result_data);
 
