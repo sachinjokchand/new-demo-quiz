@@ -275,7 +275,10 @@ app.post('/add_question',(req, res) => {
   var question = req.body.question;
   var options_array  = req.body.option;
   var answer_array   = req.body.answer;
-  var quiz_time      = req.body.quiz_time;
+
+  var minute         = req.body.quiz_time_minute;
+  var second         = req.body.quiz_time_second;
+  var quiz_time      = minute+':'+second;
 
   var option_obj     = options_array.reduce(function(o, val) { o[val] = val; return o; }, {});
   var answer_obj     = answer_array.reduce(function(o, val) { o[val] = val; return o; }, {});
