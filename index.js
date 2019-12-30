@@ -355,8 +355,8 @@ app.post('/submit_test',(req, res) => {
              new_options = results.rows[i].answer;
              answer_obj = JSON.parse(new_options);
              
-             if(correct_ans[i]){
-             question_arr = correct_ans[i].split(":");
+             if(correct_ans[i].length){
+               question_arr = correct_ans[i].split(":");
              }
              for (var key in answer_obj) {
 
