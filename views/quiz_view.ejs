@@ -23,6 +23,9 @@
  .edit_question input{
     width: 100%;
   }
+.quiz_timer{
+   width: 60px;
+  }
   
  </style>
 </head>
@@ -128,8 +131,9 @@
                <div class="form-group">
                  Answer  <input type="text" name="answer" class="answer<%= result.id %>" value="<%= result.answer %>" required>
                </div>
+
                <div class="form-group">
-                  Time <input type="text" name="quiz_time" class="quiz_time<%= result.id %>" value="<%= result.quiz_time %>" required>
+                  Time <input type="text" name="quiz_time" class="quiz_time<%= result.id %>" placeholder="mm:ss" value="<%= result.quiz_time %>" required>
                </div>
 
              </div>
