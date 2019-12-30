@@ -143,6 +143,12 @@ var user_correct_ans = {};
 var correct_ans = '<%- JSON.stringify(correct_ans) %>';
 ques_id = jQuery('.quiz_container.active').attr('question_id');
 
+var jsonString = JSON.parse(correct_ans);
+    for(index in jsonString){
+      var question_str =  jsonString[index];
+      question_arr = question_str.split(":");
+      user_correct_ans[index] = question_arr[0] +':'+question_arr[1];
+}
 
 qMax = $('#myForm div.quiz_container').length;
 
