@@ -355,7 +355,9 @@ app.post('/submit_test',(req, res) => {
              new_options = results.rows[i].answer;
              answer_obj = JSON.parse(new_options);
              
-             question_arr = correct_ans[i].split(":")
+             if(correct_ans[i].length >0){
+             question_arr = correct_ans[i].split(":");
+             }
              for (var key in answer_obj) {
 
                   // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
