@@ -49,175 +49,304 @@ input
   <div class="container">
     <h2>Question List</h2>
 
-         <form action="/submit_test" method="POST" id="myForm">
-         <% $i =1; %>
+         <form  id="myForm">
+         <% count =1; %>
+         <% selected_ques =1; %>
+         <% quiz_timer_time = 0;  %>
+         <% correct_ans = {}; %>
+
+           <% if (sess.question_data) { %>
+           <% ques_id = sess.question_data.ques_id; %>
+           <% selected_ques   = sess.question_data.count; %>
+           <% timer_time =  sess.question_data.ques_timer_time; %>
+           <% correct_ans =  sess.question_data.correct_ans; %>
+
+           <% } %>
+       
+         
+              
+              <% if ( sess.question_time ) { %>
+                <% timer_time = sess.question_time.timer_time  %>
+                <% timer_time_ques_id = sess.question_time.ques_id  %>
+              <% } %>
           
+        
           <% results.forEach((result) => { %>
-          <div class="quiz_container">
-             <div class="quiz_question">
-              <div class="left_time" id="left_time<%= $i %>"></div>
-                  <input id="tminus" class="tminus<%= $i %>" placeholder="0:00" value="" readonly/>
+
+          <% classActive=''; 
+             quiz_timer_time =  result.quiz_time;
+          %>
+
+           <%  if(count == selected_ques)
+              { 
+                if (sess.question_time && timer_time_ques_id == result.id) {
+                  quiz_timer_time = timer_time;   
+                }
+            display='block'; 
+            classActive='active'; 
+            }
+          %> 
+
+          <div class="quiz_container <%= classActive %>" question_id="<%= result.id %>" >
+             <div class="quiz_question <%= classActive %>" data-id="<%= count %>">
+              <div class="left_time" id="left_time<%= count %>"></div>
+              
+            
+             <!-- <input type="hidden" id="quiz_time<%= result.id %>" class="quiz_time<%= count %>" name="quiz_time" value="<%= quiz_timer_time %>"> -->
+                  <input id="tminus" class="tminus<%= result.id %>" placeholder="0:00" value="<%= quiz_timer_time %>" readonly/>
            
           
-             <div class='ask'> Q. <%= $i %>  <%= result.question %></div>
-             <input type="hidden" name="question[<%= $i %>]" value="<%= result.id %>">
-             <input type="hidden" class="quiz_time<%= $i %>" name="quiz_time" value="<%= result.quiz_time %>">
+             <div class='ask'> Q. <%= count %>  <%= result.question %></div>
+             <input type="hidden" name="question_id" value="<%= result.id %>">
+             <input type="hidden" name="question[<%= count %>]" value="<%= result.id %>">
+
+            
+             
              <p id='center'>
              <%   new_options = result.options; %>
              <%   jsonString = JSON.parse(new_options); %>
                 
                 <%for (var key in jsonString) { %>
-                 <input type="radio" id="options<%= $i %>" name="options[<%= $i %>]" value="<%= jsonString[key] %>"><%= jsonString[key] %>
+                 <input type="radio" id="options<%= count %>" name="options[<%= count %>]" value="<%= jsonString[key] %>"><%= jsonString[key] %>
                <% }%>
              
-            <% $i++; %>
+           <% count++; %>
             
             </p></div></div>
-        <% }) %>
-
-         <input type="hidden" name="total" value="<%= $i %>">
+        <% }) %> 
+         <input type="hidden" name="total" value="<%= count %>">
          <p align='center'><input id="btnNext" type="submit" value="next"></p></form>
       
      
 </div>
-<script src="/assets/js/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
- function noBack()
-   {
-      window.history.forward()
-   }
-    noBack();
-    window.onload = noBack;
-    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
-    window.onunload = function() { void (0) }
+     // function noBack()
+     //   {
+     //      window.history.forward()
+     //   }
+     //    noBack();
+     //    window.onload = noBack;
+     //    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+     //    window.onunload = function() { void (0) }
+
 
 jQuery(document).ready(function(){ 
+
 /*code for next question*/
-var q = 1,  qMax = 0 , i = 1, key_q =1;  
+var q = jQuery('.quiz_question.active').data('id');
+var qMax = 0 , i = 1;  
+var ques_id = '', count = '' ;
+var minutes = '',  seconds = '';
+var user_correct_ans = {};
+var correct_ans = '<%- JSON.stringify(correct_ans) %>';
+ques_id = jQuery('.quiz_container.active').attr('question_id');
 
 
- $('#btnNext').on('click', function (event) {
-     
-    if (q == qMax) {
-      // const $form = $('#myForm')
-      // $form.on('submit', submitHandler)
+qMax = $('#myForm div.quiz_container').length;
 
-      // function submitHandler (e) {
-      //   e.preventDefault()
-      //   $.ajax({
-      //     url: '/submit_test',
-      //     type:'POST',
-      //     data: $form.serialize()
-      //     }).done(response => {
-      //        jQuery('.container').html(response);
-      //    })
-      //  }
+if (q == qMax) {
+   $('#btnNext').val('Submit Answers');
+}  
+
+
+$('#btnNext').on('click', function (event) {
+    
+    var selected_option =  $('input[id=options'+q+']:checked').val();
+
+    user_correct_ans[ques_id] = ques_id +':'+selected_option;
+    
+    if (q == qMax && $('input[id=options'+q+']:checked').val()) {
+      event.preventDefault();
+    
+      var form_data = { 'user_correct_ans' : user_correct_ans };
+          console.log(user_correct_ans);
+         jQuery.ajax({
+              url: "/submit_test",
+              type: "POST",
+              dataType: "json",
+              data: form_data,
+              success: function(data) {
+                console.log(data);
+                if(data.status == 1){
+                  var baseUrl = document.location.origin;
+                  window.location.href = baseUrl+"/submit_test/"+data.result_data;
+                } 
+              },
+            
+             error: function() {
+                console.log('process error');
+              },
+          });
      }  
-  else{ event.preventDefault();
+  else { event.preventDefault();
        handleClick();
       }
    });
 
 
-  if(localStorage.getItem('key_q')){
-    q = localStorage.getItem('key_q');
-    console.log(localStorage.getItem('key_q'));
-   }
-
-$(function () {
-    qMax = $('#myForm div.quiz_container').length;
-    // console.log(qMax);
-    $('#myForm div.quiz_container:nth-child('+q+')').addClass("active");
-});
-
  
 function handleClick() {
       if (q < qMax && $('input[id=options'+q+']:checked').val()) {
-        // if (q < qMax ) {
-            
+    
           $('#myForm div.quiz_container:nth-child(' + q + ')').removeClass("active");
           $('#myForm div.quiz_container:nth-child(' + (q + 1) + ')').addClass("active");
-          if (q == (qMax - 1)) {
-
-              $('#btnNext').val('Submit Answers');
-          }
-
-           q++;
-           // localStorage.setItem('key_q', q);
-           // console.log('q value '+q);
+          
+            if (q == (qMax - 1)) {
+               $('#btnNext').val('Submit Answers');
+            }  
           /*set timer for next question*/
+           q++;
+           count = q;
+           timer_time =  jQuery('.quiz_container.active').attr('question_id');
+           setCurrentQuestionSession(ques_id, timer_time, count);
            i++;
            set_time();
-      } else {
+        }
+
+      else if ( totalAmount == 0) {
+
+           user_correct_ans[ques_id] = '';
+           $('#myForm div.quiz_container:nth-child(' + q + ')').removeClass("active");
+           $('#myForm div.quiz_container:nth-child(' + (q + 1) + ')').addClass("active");
+           ques_id = jQuery('.quiz_container.active').attr('question_id'); 
+
+             if (q == (qMax - 1)) {
+               $('#btnNext').val('Submit Answers');
+             }   
+           q++;
+           count = q;
+           timer_time =  jQuery('.quiz_container.active').attr('question_id');
+           setCurrentQuestionSession(ques_id, timer_time, count);
+          /*set timer for next question*/
+           // setCurrentQuestionSession(questionID, questionCount, user_correct_ans);
+           i++;
+           set_time();
+        }
+     
+      else {
           alert('select any one option'); // Add code to submit your form
-      }
+           }
   }
 
- 
-
-
    /*code for set time*/
-
-var totalAmount = localStorage.getItem('countDown') || 0, timeloop;
+var totalAmount = sessionStorage.getItem('countDown') || 0, timeloop;
 
   if (totalAmount) {
       timeSet();
    }
 
- function timeSet () {
+function timeSet () {
       totalAmount--;
-      // Refresh value in localStorage
-      // localStorage.setItem('countDown', totalAmount);
-
-       // If countdown is over, then remove value from storage and clear timeout
+     
+       if(sessionStorage.getItem('countDown'+q+''))
+       {  
+      if (sessionStorage.getItem('countDown'+q+'') > 0 ) {
+        totalAmount = sessionStorage.getItem('countDown'+q+'');
+        } 
+      }
+       
+      if(totalAmount==0){
+         $( "#btnNext" ).trigger( "click" );
+        }
+            
        if (totalAmount < 0 ) {
-           // localStorage.removeItem('countDown');
+           // sessionStorage.removeItem('countDown');
            totalAmount = 0;
            clearTimeout(timeloop);
            return;
        }
-
-       if( localStorage.getItem('countDown'))
-       {  
-
-         localStorage.setItem('countDown', totalAmount);
-         totalAmount1 = localStorage.getItem('countDown');
-         console.log(localStorage.getItem('countDown'));
-       }
-     
-       
-      var seconds = parseInt(totalAmount%60);
-      var minutes = parseInt(totalAmount/60);
-         
-      if(!minutes && !seconds ){
-       $( "#btnNext" ).trigger( "click" );
-      }  
+       seconds = parseInt(totalAmount%60);
+       minutes = parseInt(totalAmount/60);
 
       if(seconds < 10)
           seconds = "0"+seconds;
 
-           $('.tminus'+i).val(minutes + ":" + seconds);
-
-       // console.log(minutes);
-       //  console.log(seconds);
+            $('.tminus'+ques_id).val(minutes + ":" + seconds);
 
       timeloop = setTimeout(timeSet, 1000);
   }
 
-
   set_time();
   function set_time() {
-      var reqVal = jQuery('.quiz_time'+i).val();
-      console.log('sss'+reqVal);
-      var parAmt = parseInt(reqVal);
+ 
+      ques_id = jQuery('.quiz_container.active').attr('question_id');
+      console.log(ques_id);
+
+      var first_time =  jQuery('.tminus'+ques_id).val();
+      var time_formet = first_time.split(":");
+     
+      if(time_formet.length == 2){
+         minutes = parseInt(time_formet[0]);
+         seconds = parseInt(time_formet[1]);
+       }
+    
+      var Coountseconds =  (+minutes) * 60 + (+seconds); 
+      console.log(Coountseconds);
+
+      var reqVal = Coountseconds;
+      var parAmt = parseInt(reqVal)
+      console.log('qqqq'+reqVal);
 
       if (timeloop) {
           clearTimeout(timeloop)
       }
 
-      totalAmount = parAmt * 60;
+      totalAmount = parAmt;
       timeSet();      
    }
+
+
+function setCurrentQuestionSession(ques_id, timer_time ,count ){ 
+     console.log('count '+count);
+     console.log(timer_time);
+      setCurrentQuestionTime();
+          var ajaxurl = '/setQuestionSession';
+          var form_data = {
+                    'ques_id' : ques_id,
+                    'timer_time' : timer_time,
+                    'count' : count,
+                    'selected_option' : user_correct_ans
+                  }
+          jQuery.ajax({
+              url:ajaxurl,
+              type:'POST',  
+              dataType: 'json',
+              data: form_data,
+              success:function(res){
+                  console.log(res);
+              } 
+          });
+    } 
+
+
+    function setCurrentQuestionTime(){
+
+         var quiz_time = jQuery('.tminus'+ques_id).val(); 
+         count = jQuery('.quiz_question.active').data('id');
+        
+        // console.log(quiz_time);
+          var ajaxurl = '/setCurrentQuestionTime';
+          var form_data = {
+                    'ques_id' :ques_id,
+                    'timer_time' : quiz_time,
+                    'count'  : count
+                  }
+          jQuery.ajax({
+              url:ajaxurl,
+              type:'POST',  
+              dataType: 'json',
+              data: form_data,
+              success:function(res){
+                  // console.log(res);
+              } 
+          });  
+    } 
+
+    setInterval(function() {
+          setCurrentQuestionTime();
+        }, 1000);
+
 });
 </script>
 </body>

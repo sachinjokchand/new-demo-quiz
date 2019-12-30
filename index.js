@@ -98,7 +98,18 @@ app.post('/signup',(req, res) => {
 });
 
 app.get('/login_page',(req, res) => {  
+  if (req.session.loggedin) {
+    if(req.session.username =='admin@gmail.com'){
+          res.redirect('/home');
+        }
+    else
+    {
+     res.redirect('/user_page');
+    }
+   }
+    else{
     res.render('login_page');
+    }
   });
 
 
@@ -254,16 +265,37 @@ app.get('/view_quiz',(req, res) => {
 
   });
 
-app.post('/submit_test',(req, res) => {  
-  
+app.post('/setQuestionSession', function(req, res, next){ 
+   // console.log(req.body);
+   // console.log(JSON.stringify(req.body.correct_ans) );
+
+    sess = req.session;
+    var question_data = {
+            ques_id : req.body.ques_id,
+            ques_timer_time : req.body.timer_time,
+            count : req.body.count,
+            correct_ans : req.body.selected_option
+          }
+    sess.question_data = question_data;
+    var response =
+      {
+        'status':'1',
+        'massage': 'success',
+        'quesId': req.body.qid
+      };
+    res.send(response);
+    res.end();
+})
+
+
+app.post('/submit_test',(req, res) => { 
+
   var correct = 0;  
-  var question = req.body.question;
-  var options_array  = req.body.options;
-  var total_question = question.length;
-  console.log(question);
-  console.log(options_array);
+  var correct_ans = req.body.user_correct_ans;
+  var total_question = correct_ans.length;
    
    if (req.session.loggedin) {
+
         let sql = "SELECT * FROM new_quiz";
         let query = conn.query(sql, (err, results) => {
       
@@ -272,10 +304,11 @@ app.post('/submit_test',(req, res) => {
              new_options = results.rows[i].answer;
              answer_obj = JSON.parse(new_options);
              
+             question_arr = correct_ans[i].split(":")
              for (var key in answer_obj) {
-            
+
                   // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
-                 if( question[i] == results.rows[i].id && key == options_array[i])   
+                 if( question_arr[0] == results.rows[i].id && key == question_arr[1])   
                  {
                   correct++;
                    // console.log(correct);
@@ -284,9 +317,17 @@ app.post('/submit_test',(req, res) => {
 
           }
           var result_data = 'results '+correct+' out of '+total_question;
-          res.render('submit_page',{
-            result_data: result_data
-          });
+          console.log("sssssssss "+correct);
+          var response =
+              {
+                'status':'1',
+                'massage': 'success',
+                'result_data': result_data
+              };
+          res.send(response);
+         // res.render('submit_page',{
+          //   result_data: result_data
+          // });
         }
       else {
            console.log(err);
@@ -297,7 +338,17 @@ else {
       // res.render('login_page');
      res.redirect('/login_page');
    }
-  });
+});
+
+app.get('/submit_test/(:result_data)', function(req, res, next){
+ 
+console.log( req.params.result_data);
+
+ res.render('submit_page',{
+            result_data: req.params.result_data
+          });
+})
+
 
 //server listening
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
