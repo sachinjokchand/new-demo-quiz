@@ -168,23 +168,23 @@ $('#btnNext').on('click', function (event) {
     
       var form_data = { 'user_correct_ans' : user_correct_ans };
           console.log(user_correct_ans);
-         // jQuery.ajax({
-         //      url: "/submit_test",
-         //      type: "POST",
-         //      dataType: "json",
-         //      data: form_data,
-         //      success: function(data) {
-         //        console.log(data);
-         //        if(data.status == 1){
-         //          var baseUrl = document.location.origin;
-         //          window.location.href = baseUrl+"/submit_test/"+data.result_data;
-         //        } 
-         //      },
+         jQuery.ajax({
+              url: "/submit_test",
+              type: "POST",
+              dataType: "json",
+              data: form_data,
+              success: function(data) {
+                console.log(data);
+                if(data.status == 1){
+                  var baseUrl = document.location.origin;
+                  window.location.href = baseUrl+"/submit_test/"+data.result_data;
+                } 
+              },
             
-         //     error: function() {
-         //        console.log('process error');
-         //      },
-         //  });
+             error: function() {
+                console.log('process error');
+              },
+          });
      }  
   else { event.preventDefault();
        handleClick();
