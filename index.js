@@ -50,7 +50,7 @@ app.set('views',path.join(__dirname,'views'));
 
 //set view engine
 app.set('view engine', 'ejs');
-aapp.use(session({
+app.use(session({
   secret: "sosecret",
   saveUninitialized: false,
   resave: false
