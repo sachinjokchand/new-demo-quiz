@@ -50,16 +50,21 @@ app.set('views',path.join(__dirname,'views'));
 
 //set view engine
 app.set('view engine', 'ejs');
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
+aapp.use(session({
+  secret: "sosecret",
+  saveUninitialized: false,
+  resave: false
 }));
+
+// middleware to make 'user' available to all templates
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+
 //set public folder as static folder for static file
 app.use('/assets',express.static(__dirname + '/public'));
  
@@ -175,24 +180,32 @@ app.get('/user_page',(req, res) => {
 
 
 app.get('/give_quiz',(req, res) => {  
+     sess = req.session;
+   if(sess.question_data == '' ){
+      var question_data = {};
+       question_data = question_data;
+    }
   if (req.session.loggedin && req.session.username) {
-    const query = {
-      text: 'SELECT * FROM new_quiz'
-     }
-     conn.query(query, (err, results) => {
-        if (err) {
-          console.log(err.stack+'aaaaaaaaaaaaaa');
-        } else {
-          // console.log(results.rows);
+    // console.log(sess.question_data);
+   
+    let sql = "SELECT * FROM new_quiz";
+    let query = conn.query(sql, (err, results) => {
+     if (results.rows.length>0) {
+      // console.log(results);
+         
          res.render('user_quiz',{
               results: results.rows
             });
+        } else {
+          console.log(err+'aaaaaaaaaaaaaa');
+          // console.log(results.rows);
 
         }
       })
   }
   else {
-     res.redirect('/login_page');
+      res.render('login_page');
+     // res.redirect('/login_page');
   }
 
   });
