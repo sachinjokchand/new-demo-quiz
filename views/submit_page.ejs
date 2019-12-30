@@ -6,8 +6,14 @@
  </head>
  <body>
  <div class="result_data"></div>
- 
- <%= result_data %>
+
+    <%   jsonString = JSON.parse(result_data); %>
+                
+                <%for (var key in jsonString) { %>
+                <%= jsonString[key] %><br>
+          <% }%>
+    
+    
  
  </body>
  </html>

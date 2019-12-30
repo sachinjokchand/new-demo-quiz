@@ -347,6 +347,9 @@ app.post('/submit_test',(req, res) => {
   var correct = 0;  
   var correct_ans = req.body.user_correct_ans;
   var total_question = correct_ans.length;
+  var selected_option = [];
+  var right_answer = [];
+  var  result_data = [];
    
    if (req.session.loggedin) {
 
@@ -362,6 +365,8 @@ app.post('/submit_test',(req, res) => {
                question_arr = correct_ans[i].split(":");
              }
              for (var key in answer_obj) {
+             selected_option[i] = question_arr[1];
+             right_answer [i]  = key;
 
                   // if( results.rows[0].answer == answer[0] && results.rows[0].id == question_id[0] )
                  if( question_arr[0] == results.rows[i].id && key == question_arr[1])   
@@ -372,13 +377,18 @@ app.post('/submit_test',(req, res) => {
             }
 
           }
-          var result_data = 'results '+correct+' out of '+total_question;
-          console.log("sssssssss "+correct);
+          result_data[0] = 'results = '+correct+' out of '+total_question;
+          result_data[1] = 'your selected option = '+ selected_option;
+          result_data[2] = 'correct option = ' + right_answer;
+
+          var result_data_obj     = result_data.reduce(function(o, val) { o[val] = val; return o; }, {});
+          var result_data_options        = JSON.stringify(result_data_obj);
+      
           var response =
               {
                 'status':'1',
                 'massage': 'success',
-                'result_data': result_data
+                'result_data': result_data_options
               };
           res.send(response);
          // res.render('submit_page',{
